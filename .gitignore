@@ -12,7 +12,7 @@ nbproject/
 
 # Symfony files and folders
 app/config/parameters.yml
-app/bootstrap*
+#app/bootstrap* # Not ignored now
 web/bundles/*
 web/uploads/*
 app/cache/*
