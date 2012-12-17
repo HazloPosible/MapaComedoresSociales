@@ -1,0 +1,14 @@
+parameters:
+    database_driver: pdo_mysql # pdo_mysql for mysql
+    database_host: 127.0.0.1 # or database ip
+    database_port: null # database port here
+    database_name: example_name # database name here
+    database_user: example_user # database user here
+    database_password: 929nmknm39 # database password here
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1 # or mailer host ip
+    mailer_user: null # or mailer user
+    mailer_password: null # or mailer password
+    locale: es # es for Spanish
+    secret: # an md5 passphrase created by you
+    database_path: null # database path by default null

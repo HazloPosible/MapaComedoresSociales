@@ -1,0 +1,21 @@
+# generics
+*~
+*.DS_Store
+*.swp
+*.out
+
+# IDE files
+nbproject/
+.idea/
+*.tmproj
+*.project
+
+# Symfony files and folders
+app/config/parameters.yml
+app/bootstrap*
+web/bundles/*
+web/uploads/*
+app/cache/*
+app/logs/*
+build/
+vendor/*
