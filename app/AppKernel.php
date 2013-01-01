@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new MapaComedoresSociales\UserBundle\UserBundle(),
             new MapaComedoresSociales\GeoLocationBundle\GeoLocationBundle(),
             new MapaComedoresSociales\CommentBundle\CommentBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
