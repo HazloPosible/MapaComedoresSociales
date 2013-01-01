@@ -23,6 +23,11 @@ class AppKernel extends Kernel
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new MapaComedoresSociales\BackendBundle\BackendBundle(),
+            new MapaComedoresSociales\PantryBundle\PantryBundle(),
+            new MapaComedoresSociales\UserBundle\UserBundle(),
+            new MapaComedoresSociales\GeoLocationBundle\GeoLocationBundle(),
+            new MapaComedoresSociales\CommentBundle\CommentBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
