@@ -1,0 +1,9 @@
+user_login:
+	pattern: /login
+	defaults: { _controller: UserBundle:Default:login }
+
+user_login_check:
+	pattern: /login_check
+
+user_login_logout:
+	pattern: /logout

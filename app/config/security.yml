@@ -37,6 +37,10 @@ security:
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
+        frontend:
+            form_login:
+                login_path: /user/login
+                check_path: /user/login_check
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

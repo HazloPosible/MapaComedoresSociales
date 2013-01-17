@@ -3,6 +3,7 @@
 namespace MapaComedoresSociales\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -11,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table()
  * @ORM\Entity
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer $id
@@ -474,4 +475,22 @@ class User
     {
         $this->comments->removeElement($comments);
     }
+
+
+    /**
+    *
+    *  User Interfaces set up
+    */
+    function eraseCredentials()
+    {
+    }   
+    function getRoles()
+    {
+        return array('ROLE_USUARIO');
+    }
+    function getUsername()
+    {
+        return $this->getEmail();
+    }
+
 }
