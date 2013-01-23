@@ -5,6 +5,7 @@ namespace MapaComedoresSociales\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * MapaComedoresSociales\UserBundle\Entity\User
@@ -104,6 +105,18 @@ class User implements UserInterface
      * @ORM\Column(name="last_login_at", type="datetime", nullable=true)
      */
     private $last_login_at;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->active = true;
+        $this->salt = md5(uniqid(null, true));
+    }
 
 
     /**
@@ -391,15 +404,7 @@ class User implements UserInterface
     {
         return $this->last_login_at;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Set updated_at
      *
@@ -476,21 +481,46 @@ class User implements UserInterface
         $this->comments->removeElement($comments);
     }
 
-
     /**
     *
     *  User Interfaces set up
     */
-    function eraseCredentials()
+    public function eraseCredentials()
     {
     }   
-    function getRoles()
+
+    public function getRoles()
     {
-        return array('ROLE_USUARIO');
+        return array('ROLE_USER');
     }
+
     function getUsername()
     {
         return $this->getEmail();
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list ($this->id,
+        ) = unserialize($serialized);
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->email === $user->getUsername();
     }
 
 }

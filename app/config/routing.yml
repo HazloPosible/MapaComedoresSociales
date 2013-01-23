@@ -1,27 +1,26 @@
 comment:
     resource: "@CommentBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /comment
 
 geo_location:
     resource: "@GeoLocationBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /geo
 
 user:
-    resource: "@UserBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /user
 
 pantry:
     resource: "@PantryBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /pantry
 
 backend:
     resource: "@BackendBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /backend
 
 _welcome:
     pattern: /
