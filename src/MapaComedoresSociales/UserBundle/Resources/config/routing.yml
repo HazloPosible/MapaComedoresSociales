@@ -1,9 +1,17 @@
+UserBundle_user:
+   resource: "@UserBundle/Resources/config/routing/user.yml"
+   prefix: /
+
 user_login:
-	pattern: /login
-	defaults: { _controller: UserBundle:Default:login }
+   pattern: /login
+   defaults: { _controller: "UserBundle:Default:login" }
 
 user_login_check:
-	pattern: /login_check
+   pattern: /login_check
 
 user_login_logout:
-	pattern: /logout
+   pattern: /logout
+
+user_register:
+   pattern: /register
+   defaults: { _controller: "UserBundle:Default:register" }

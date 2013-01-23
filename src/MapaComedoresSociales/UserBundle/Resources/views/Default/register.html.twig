@@ -1,0 +1,20 @@
+
+ <h1>Regístrate gratis como usuario </h1>
+
+
+<form action="{{ path('user_register') }}" method="post" {{
+   form_enctype(form) }}>
+
+   {{ form_errors(form )}}
+   
+   <fieldset>
+      <legend>Datos de registro</legend>
+      {{ form_row(form.name) }}
+      {{ form_row(form.lastname) }}
+      {{ form_row(form.email) }}
+      {{ form_row(form.password) }}
+   </fieldset>
+   <input class="boton" type="submit" value="register_me" />
+</form>
+
+

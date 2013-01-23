@@ -4,7 +4,9 @@
 <form action="{{ path('user_login_check') }}" method="post">
 	<label for="username">Usuario:</label>
 	<input type="text" id="username" name="_username" value="{{ last_username }}" />
+   <br>
 	<label for="password">Contraseña:</label>
 	<input type="password" id="password" name="_password" />
+   <br>
 	<input type="submit" name="login" value="Acceder" />
 </form>
