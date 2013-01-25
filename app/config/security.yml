@@ -1,10 +1,11 @@
 security:
     encoders:
-        MapaComedoresSociales\UserBundle\Entity\User: plaintext #Cambiar mas adelante por sha512
+        MapaComedoresSociales\UserBundle\Entity\User: { algorithm: sha512, iterations: 10 }
 
     providers:
         users:
             entity: { class: UserBundle:User, property: email }
+
 
     firewalls:
         frontend:
