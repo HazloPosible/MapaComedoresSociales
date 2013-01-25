@@ -3,6 +3,7 @@
 namespace MapaComedoresSociales\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  * @ORM\Table()
  * @ORM\Entity
  */
-class User implements UserInterface
+class User implements AdvancedUserInterface
 {
     /**
      * @var integer $id
@@ -70,18 +71,18 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @var boolean $enabled
+     * @var boolean $isEnable
      *
-     * @ORM\Column(name="enabled", type="boolean")
+     * @ORM\Column(name="enable", type="boolean")
      */
-    private $enabled;
+    private $isEnable;
 
     /**
-     * @var boolean $active
+     * @var boolean $isActive
      *
-     * @ORM\Column(name="active", type="boolean", nullable=true)
+     * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
+    private $isActive;
 
     /**
      * @var \DateTime $create_at
@@ -116,6 +117,128 @@ class User implements UserInterface
 
         $this->active = true;
         $this->salt = md5(uniqid(null, true));
+    }
+
+    /**
+     * Add pantries
+     *
+     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
+     * @return User
+     */
+    public function addPantrie(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    {
+        $this->pantries[] = $pantries;
+    
+        return $this;
+    }
+
+    /**
+     * Remove pantries
+     *
+     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
+     */
+    public function removePantrie(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    {
+        $this->pantries->removeElement($pantries);
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
+     * @return User
+     */
+    public function addComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
+     */
+    public function removeComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+    *
+    *  User Interfaces set up
+    */
+
+    // UserInterface
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials()
+    {
+
+    } 
+
+    // AdvancedUserInterface
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }  
+
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->email === $user->getUsername();
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list ($this->id,
+        ) = unserialize($serialized);
     }
 
 
@@ -189,16 +312,6 @@ class User implements UserInterface
     }
 
     /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Set salt
      *
      * @param string $salt
@@ -209,16 +322,6 @@ class User implements UserInterface
         $this->salt = $salt;
     
         return $this;
-    }
-
-    /**
-     * Get salt
-     *
-     * @return string 
-     */
-    public function getSalt()
-    {
-        return $this->salt;
     }
 
     /**
@@ -245,95 +348,49 @@ class User implements UserInterface
     }
 
     /**
-     * Set pantries
+     * Set isEnable
      *
-     * @param string $pantries
+     * @param boolean $isEnable
      * @return User
      */
-    public function setPantries($pantries)
+    public function setIsEnable($isEnable)
     {
-        $this->pantries = $pantries;
+        $this->isEnable = $isEnable;
     
         return $this;
     }
 
     /**
-     * Get pantries
-     *
-     * @return string 
-     */
-    public function getPantries()
-    {
-        return $this->pantries;
-    }
-
-    /**
-     * Set comments
-     *
-     * @param string $comments
-     * @return User
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-    
-        return $this;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return string 
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     * @return User
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-    
-        return $this;
-    }
-
-    /**
-     * Get enabled
+     * Get isEnable
      *
      * @return boolean 
      */
-    public function getEnabled()
+    public function getIsEnable()
     {
-        return $this->enabled;
+        return $this->isEnable;
     }
 
     /**
-     * Set active
+     * Set isAactive
      *
-     * @param boolean $active
+     * @param boolean $isAactive
      * @return User
      */
-    public function setActive($active)
+    public function setIsActive($isActive)
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
     
         return $this;
     }
 
     /**
-     * Get active
+     * Get isAactive
      *
      * @return boolean 
      */
-    public function getActive()
+    public function getIsActive()
     {
-        return $this->active;
+        return $this->isActive;
     }
 
     /**
@@ -362,12 +419,12 @@ class User implements UserInterface
     /**
      * Set updated_at
      *
-     * @param \DateTime $updateAt
+     * @param \DateTime $updatedAt
      * @return User
      */
-    public function setUpdateAt($updateAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updateAt;
+        $this->updated_at = $updatedAt;
     
         return $this;
     }
@@ -377,7 +434,7 @@ class User implements UserInterface
      *
      * @return \DateTime 
      */
-    public function getUpdateAt()
+    public function getUpdatedAt()
     {
         return $this->updated_at;
     }
@@ -406,121 +463,22 @@ class User implements UserInterface
     }
 
     /**
-     * Set updated_at
+     * Get pantries
      *
-     * @param \DateTime $updatedAt
-     * @return User
+     * @return \Doctrine\Common\Collections\Collection 
      */
-   
+    public function getPantries()
+    {
+        return $this->pantries;
+    }
+
     /**
-     * Set updated_at
+     * Get comments
      *
-     * @param \DateTime $updatedAt
-     * @return User
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function setUpdatedAt($updatedAt)
+    public function getComments()
     {
-        $this->updated_at = $updatedAt;
-    
-        return $this;
+        return $this->comments;
     }
-
-    /**
-     * Get updated_at
-     *
-     * @return \DateTime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updated_at;
-    }
-
-    /**
-     * Add pantries
-     *
-     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
-     * @return User
-     */
-    public function addPantrie(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
-    {
-        $this->pantries[] = $pantries;
-    
-        return $this;
-    }
-
-    /**
-     * Remove pantries
-     *
-     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
-     */
-    public function removePantrie(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
-    {
-        $this->pantries->removeElement($pantries);
-    }
-
-    /**
-     * Add comments
-     *
-     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
-     * @return User
-     */
-    public function addComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
-    {
-        $this->comments[] = $comments;
-    
-        return $this;
-    }
-
-    /**
-     * Remove comments
-     *
-     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
-     */
-    public function removeComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
-    {
-        $this->comments->removeElement($comments);
-    }
-
-    /**
-    *
-    *  User Interfaces set up
-    */
-    public function eraseCredentials()
-    {
-    }   
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-    function getUsername()
-    {
-        return $this->getEmail();
-    }
-
-    /**
-     * @see \Serializable::serialize()
-     */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-        ));
-    }
-
-    /**
-     * @see \Serializable::unserialize()
-     */
-    public function unserialize($serialized)
-    {
-        list ($this->id,
-        ) = unserialize($serialized);
-    }
-
-    public function isEqualTo(UserInterface $user)
-    {
-        return $this->email === $user->getUsername();
-    }
-
 }
