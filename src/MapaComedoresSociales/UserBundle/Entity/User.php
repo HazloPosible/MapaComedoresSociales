@@ -71,18 +71,18 @@ class User implements AdvancedUserInterface
     private $comments;
 
     /**
-     * @var boolean $isEnable
+     * @var boolean $enable
      *
      * @ORM\Column(name="enable", type="boolean")
      */
-    private $isEnable;
+    private $enable;
 
     /**
-     * @var boolean $isActive
+     * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean")
      */
-    private $isActive;
+    private $active;
 
     /**
      * @var \DateTime $create_at
@@ -214,7 +214,7 @@ class User implements AdvancedUserInterface
 
     public function isEnabled()
     {
-        return $this->isActive;
+        return $this->active;
     }  
 
     public function isEqualTo(UserInterface $user)
@@ -240,7 +240,26 @@ class User implements AdvancedUserInterface
         list ($this->id,
         ) = unserialize($serialized);
     }
-
+    
+    /**
+     * Get isAactive
+     *
+     * @return boolean 
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+    
+    /**
+     * Get isEnable
+     *
+     * @return boolean 
+     */
+    public function isEnable()
+    {
+        return $this->enable;
+    }
 
     /**
      * Get id
@@ -348,26 +367,26 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set isEnable
+     * Set enable
      *
-     * @param boolean $isEnable
+     * @param boolean $enable
      * @return User
      */
-    public function setIsEnable($isEnable)
+    public function setEnable($enable)
     {
-        $this->isEnable = $isEnable;
+        $this->enable = $enable;
     
         return $this;
     }
 
     /**
-     * Get isEnable
+     * Get enable
      *
      * @return boolean 
      */
-    public function getIsEnable()
+    public function getEnable()
     {
-        return $this->isEnable;
+        return $this->enable;
     }
 
     /**
@@ -376,21 +395,21 @@ class User implements AdvancedUserInterface
      * @param boolean $isAactive
      * @return User
      */
-    public function setIsActive($isActive)
+    public function setActive($active)
     {
-        $this->isActive = $isActive;
+        $this->active = $active;
     
         return $this;
     }
 
     /**
-     * Get isAactive
+     * Get active
      *
      * @return boolean 
      */
-    public function getIsActive()
+    public function getActive()
     {
-        return $this->isActive;
+        return $this->active;
     }
 
     /**

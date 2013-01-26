@@ -39,9 +39,9 @@ class LoadUser implements FixtureInterface, ContainerAwareInterface
             $user->setEmail('user'.$i.'@localhost');
 
             // 60% users actives
-            $user->setIsActive((rand(1, 1000) % 10) < 6);
+            $user->setActive((rand(1, 1000) % 10) < 6);
             // 60% users enables
-            $user->setIsEnable((rand(1, 1000) % 10) < 6);
+            $user->setEnable((rand(1, 1000) % 10) < 6);
 
             // Password generation
             $user->setSalt(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));

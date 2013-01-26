@@ -14,8 +14,8 @@
                 <th>Password</th>
                 <th>Salt</th>
                 <th>Email</th>
-                <th>Isenable</th>
-                <th>Isactive</th>
+                <th>Enable</th>
+                <th>Active</th>
                 <th>Created_at</th>
                 <th>Updated_at</th>
                 <th>Last_login_at</th>
@@ -31,8 +31,8 @@
                 <td>{{ entity.password }}</td>
                 <td>{{ entity.salt }}</td>
                 <td>{{ entity.email }}</td>
-                <td>{{ entity.isEnable }}</td>
-                <td>{{ entity.isActive }}</td>
+                <td>{{ entity.enable }}</td>
+                <td>{{ entity.active }}</td>
                 <td>{% if entity.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.lastloginat %}{{ entity.lastloginat|date('Y-m-d H:i:s') }}{% endif %}</td>
