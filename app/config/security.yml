@@ -18,6 +18,8 @@ security:
             form_login: 
                 login_path: user_login
                 check_path: user_login_check
+            logout:
+                path: user_logout
             remember_me:
                 key: "5445ASDASD" # "%secret%"
                 lifetime: 31536000 # 365 days in seconds
@@ -25,5 +27,5 @@ security:
                 domain: ~ # Defaults to the current domain from $_SERVER
 
     access_control:
-        - { path: ^/user/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/(login|register), roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/*, roles: ROLE_USER }

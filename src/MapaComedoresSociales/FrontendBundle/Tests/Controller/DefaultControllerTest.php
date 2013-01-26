@@ -1,6 +1,6 @@
 <?php
 
-namespace Front\MainBundle\Tests\Controller;
+namespace MapaComedoresSociales\FrontendBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

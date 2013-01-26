@@ -1,3 +1,7 @@
+frontend:
+    resource: "@FrontendBundle/Resources/config/routing.yml"
+    prefix:   /
+
 comment:
     resource: "@CommentBundle/Controller/"
     type:     annotation
@@ -24,11 +28,7 @@ backend:
 
 _welcome:
     pattern: /
-    defaults: { _controller: FrontMainBundle:Main:index }
-
-front_main:
-    resource: "@FrontMainBundle/Resources/config/routing.yml"
-    prefix:   /
+    defaults: { _controller: FrontendBundle:Default:index }
 
 # Internal routing configuration to handle ESI
 #_internal:
