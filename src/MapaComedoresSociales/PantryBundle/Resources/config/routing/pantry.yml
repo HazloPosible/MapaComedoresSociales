@@ -1,0 +1,30 @@
+pantry:
+    pattern:  /
+    defaults: { _controller: "PantryBundle:Pantry:index" }
+
+pantry_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PantryBundle:Pantry:show" }
+
+pantry_new:
+    pattern:  /new
+    defaults: { _controller: "PantryBundle:Pantry:new" }
+
+pantry_create:
+    pattern:  /create
+    defaults: { _controller: "PantryBundle:Pantry:create" }
+    requirements: { _method: post }
+
+pantry_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PantryBundle:Pantry:edit" }
+
+pantry_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PantryBundle:Pantry:update" }
+    requirements: { _method: post }
+
+pantry_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PantryBundle:Pantry:delete" }
+    requirements: { _method: post }

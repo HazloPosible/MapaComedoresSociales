@@ -17,8 +17,7 @@ user:
     prefix:   /user
 
 pantry:
-    resource: "@PantryBundle/Controller/"
-    type:     annotation
+    resource: "@PantryBundle/Resources/config/routing.yml"
     prefix:   /pantry
 
 backend:
