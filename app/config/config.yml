@@ -60,3 +60,9 @@ swiftmailer:
 
 mopa_bootstrap:
     navbar: ~
+
+stof_doctrine_extensions:
+    default_locale: es_ES
+    orm:
+        default:
+            timestampable: true

@@ -1,6 +1,4 @@
 services:
-
-services:
     mapa_comedores_sociales.frontend_bundle.menu.main.builder:
         class: MapaComedoresSociales\FrontendBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory"]
