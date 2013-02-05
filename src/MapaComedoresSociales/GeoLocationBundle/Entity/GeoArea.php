@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea
  *
  * @Gedmo\Tree(type="nested")
- * @ORM\Table()
+ * @ORM\Table(name="geoareas")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class GeoArea
@@ -258,7 +258,7 @@ class GeoArea
      * @param string $parent
      * @return GeoArea
      */
-    public function setParent($parent)
+    public function setParent(GeoArea $parent = null)
     {
         $this->parent = $parent;
     
