@@ -1,0 +1,23 @@
+
+ {% extends '::frontend.html.twig' %}
+
+{% block headline %}Formulario de registro{% endblock headline %}
+
+{% block content %}
+
+   <form class= "form-horizontal" action="{{ path('user_register') }}" method="post" {{
+      form_enctype(form) }}>
+
+      {{ form_errors(form )}}
+      
+      <fieldset>
+         <legend>Datos de usuario</legend>
+         {{ form_row(form.name) }}
+         {{ form_row(form.lastname) }}
+         {{ form_row(form.email) }}
+         {{ form_row(form.password) }}
+      </fieldset>
+      <input class="btn btn-primary" type="submit" value="Registrame" />
+   </form>
+
+{% endblock content %}

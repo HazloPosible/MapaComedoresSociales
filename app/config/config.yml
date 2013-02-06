@@ -60,3 +60,13 @@ swiftmailer:
 
 mopa_bootstrap:
     navbar: ~
+
+
+# Doctrine Extensions Configuration
+stof_doctrine_extensions:
+        default_locale: es_ES
+        translation_fallback: true
+        orm:
+            default:
+              timestampable: true
+              tree: true

@@ -1,0 +1,4 @@
+pantry_pantry:
+    resource: "@PantryBundle/Resources/config/routing/pantry.yml"
+    prefix:   /
+

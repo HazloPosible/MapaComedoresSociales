@@ -3,7 +3,10 @@
 namespace MapaComedoresSociales\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * MapaComedoresSociales\UserBundle\Entity\User
@@ -11,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table()
  * @ORM\Entity
  */
-class User
+class User implements AdvancedUserInterface
 {
     /**
      * @var integer $id
@@ -68,16 +71,16 @@ class User
     private $comments;
 
     /**
-     * @var boolean $enabled
+     * @var boolean $enable
      *
-     * @ORM\Column(name="enabled", type="boolean")
+     * @ORM\Column(name="enable", type="boolean")
      */
-    private $enabled;
+    private $enable;
 
     /**
      * @var boolean $active
      *
-     * @ORM\Column(name="active", type="boolean", nullable=true)
+     * @ORM\Column(name="active", type="boolean")
      */
     private $active;
 
@@ -93,7 +96,7 @@ class User
      * @var \DateTime $updated_at
      *
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -104,6 +107,175 @@ class User
      */
     private $last_login_at;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->active = true;
+        $this->salt = md5(uniqid(null, true));
+    }
+
+    /**
+     * Return name + lastname for relationships
+     *
+     * @param void
+     * @return String
+     */
+    public function __toString()
+    {
+        return $this->getName().', '.$this->getLastname();
+    }
+
+    /**
+     * Add pantries
+     *
+     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
+     * @return User
+     */
+    public function addPantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    {
+        $this->pantries[] = $pantries;
+    
+        return $this;
+    }
+
+    /**
+     * Remove pantries
+     *
+     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
+     */
+    public function removePantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    {
+        $this->pantries->removeElement($pantries);
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
+     * @return User
+     */
+    public function addComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
+     */
+    public function removeComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+    *
+    *  User Interfaces set up
+    */
+
+    // UserInterface
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials()
+    {
+
+    } 
+
+    // AdvancedUserInterface
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->active;
+    }  
+
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->email === $user->getUsername();
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list ($this->id,
+        ) = unserialize($serialized);
+    }
+    
+    /**
+     * Get isAactive
+     *
+     * @return boolean 
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+    
+    /**
+     * Get isEnable
+     *
+     * @return boolean 
+     */
+    public function isEnable()
+    {
+        return $this->enable;
+    }
+
+    /*================================
+    *      GENERATED
+    *=================================
+    */
 
     /**
      * Get id
@@ -175,16 +347,6 @@ class User
     }
 
     /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Set salt
      *
      * @param string $salt
@@ -195,16 +357,6 @@ class User
         $this->salt = $salt;
     
         return $this;
-    }
-
-    /**
-     * Get salt
-     *
-     * @return string 
-     */
-    public function getSalt()
-    {
-        return $this->salt;
     }
 
     /**
@@ -231,78 +383,32 @@ class User
     }
 
     /**
-     * Set pantries
+     * Set enable
      *
-     * @param string $pantries
+     * @param boolean $enable
      * @return User
      */
-    public function setPantries($pantries)
+    public function setEnable($enable)
     {
-        $this->pantries = $pantries;
+        $this->enable = $enable;
     
         return $this;
     }
 
     /**
-     * Get pantries
-     *
-     * @return string 
-     */
-    public function getPantries()
-    {
-        return $this->pantries;
-    }
-
-    /**
-     * Set comments
-     *
-     * @param string $comments
-     * @return User
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-    
-        return $this;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return string 
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     * @return User
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-    
-        return $this;
-    }
-
-    /**
-     * Get enabled
+     * Get enable
      *
      * @return boolean 
      */
-    public function getEnabled()
+    public function getEnable()
     {
-        return $this->enabled;
+        return $this->enable;
     }
 
     /**
-     * Set active
+     * Set isAactive
      *
-     * @param boolean $active
+     * @param boolean $isAactive
      * @return User
      */
     public function setActive($active)
@@ -348,12 +454,12 @@ class User
     /**
      * Set updated_at
      *
-     * @param \DateTime $updateAt
+     * @param \DateTime $updatedAt
      * @return User
      */
-    public function setUpdateAt($updateAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updateAt;
+        $this->updated_at = $updatedAt;
     
         return $this;
     }
@@ -363,7 +469,7 @@ class User
      *
      * @return \DateTime 
      */
-    public function getUpdateAt()
+    public function getUpdatedAt()
     {
         return $this->updated_at;
     }
@@ -390,88 +496,24 @@ class User
     {
         return $this->last_login_at;
     }
+
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Set updated_at
+     * Get pantries
      *
-     * @param \DateTime $updatedAt
-     * @return User
+     * @return \Doctrine\Common\Collections\Collection 
      */
-   
-    /**
-     * Set updated_at
-     *
-     * @param \DateTime $updatedAt
-     * @return User
-     */
-    public function setUpdatedAt($updatedAt)
+    public function getPantries()
     {
-        $this->updated_at = $updatedAt;
-    
-        return $this;
+        return $this->pantries;
     }
 
     /**
-     * Get updated_at
+     * Get comments
      *
-     * @return \DateTime 
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getUpdatedAt()
+    public function getComments()
     {
-        return $this->updated_at;
-    }
-
-    /**
-     * Add pantries
-     *
-     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
-     * @return User
-     */
-    public function addPantrie(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
-    {
-        $this->pantries[] = $pantries;
-    
-        return $this;
-    }
-
-    /**
-     * Remove pantries
-     *
-     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
-     */
-    public function removePantrie(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
-    {
-        $this->pantries->removeElement($pantries);
-    }
-
-    /**
-     * Add comments
-     *
-     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
-     * @return User
-     */
-    public function addComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
-    {
-        $this->comments[] = $comments;
-    
-        return $this;
-    }
-
-    /**
-     * Remove comments
-     *
-     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
-     */
-    public function removeComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
-    {
-        $this->comments->removeElement($comments);
+        return $this->comments;
     }
 }
