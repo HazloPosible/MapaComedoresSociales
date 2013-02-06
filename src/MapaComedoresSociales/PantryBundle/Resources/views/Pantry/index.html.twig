@@ -1,6 +1,10 @@
-<h1>Pantry list</h1>
+{% extends '::frontend.html.twig' %}
 
-<table class="records_list">
+{% block headline %}Pantry list{% endblock headline %}
+
+{% block content %}
+
+<table class="table table-hover">
     <thead>
         <tr>
             <th>Id</th>
@@ -42,10 +46,7 @@
     </tbody>
 </table>
 
-<ul>
-    <li>
-        <a href="{{ path('pantry_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+<a class="btn btn-primary" href="{{ path('pantry_new') }}">
+    Create a new entry
+</a>
+{% endblock content %}

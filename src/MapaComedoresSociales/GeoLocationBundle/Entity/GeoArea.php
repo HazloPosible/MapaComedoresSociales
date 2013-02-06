@@ -88,6 +88,11 @@ class GeoArea
     private $level;
 
     /**
+     * @ORM\OneToMany(targetEntity="MapaComedoresSociales\PantryBundle\Entity\Pantry", mappedBy="geoarea")
+     **/
+    private $pantries;
+
+    /**
      * @var \DateTime $create_at
      *
      * @Gedmo\Timestampable(on="create")
@@ -103,6 +108,76 @@ class GeoArea
      */
     private $updated_at;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add pantries
+     *
+     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
+     * @return
+     */
+    public function addPantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    {
+        $this->pantries[] = $pantries;
+
+        return $this;
+    }
+
+    /**
+     * Remove pantries
+     *
+     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
+     */
+    public function removePantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    {
+        $this->pantries->removeElement($pantries);
+    }
+
+    /**
+     * Add children
+     *
+     * @param \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $children
+     * @return GeoArea
+     */
+    public function addChildren(\MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $children
+     */
+    public function removeChildren(\MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get string with name element in the entity
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /*================================
+     *      GENERATED
+     *================================
+     */
 
     /**
      * Get id
@@ -389,14 +464,7 @@ class GeoArea
     {
         return $this->updated_at;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Set updated_at
      *
@@ -420,26 +488,5 @@ class GeoArea
         return $this->updated_at;
     }
 
-    /**
-     * Add children
-     *
-     * @param \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $children
-     * @return GeoArea
-     */
-    public function addChildren(\MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $children)
-    {
-        $this->children[] = $children;
-    
-        return $this;
-    }
 
-    /**
-     * Remove children
-     *
-     * @param \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $children
-     */
-    public function removeChildren(\MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $children)
-    {
-        $this->children->removeElement($children);
-    }
 }

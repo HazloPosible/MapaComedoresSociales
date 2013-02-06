@@ -1,9 +1,13 @@
-<h1>Pantry creation</h1>
+{% extends '::frontend.html.twig' %}
+
+{% block headline %}Pantry creation{% endblock headline %}
+
+{% block content %}
 
 <form action="{{ path('pantry_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
-        <button type="submit">Create</button>
+        <button class="btn btn-primary" type="submit">Create</button>
     </p>
 </form>
 
@@ -14,3 +18,5 @@
         </a>
     </li>
 </ul>
+
+{% endblock content %}

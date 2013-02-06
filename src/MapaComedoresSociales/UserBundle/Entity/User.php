@@ -120,12 +120,23 @@ class User implements AdvancedUserInterface
     }
 
     /**
+     * Return name + lastname for relationships
+     *
+     * @param void
+     * @return String
+     */
+    public function __toString()
+    {
+        return $this->getName().', '.$this->getLastname();
+    }
+
+    /**
      * Add pantries
      *
      * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
      * @return User
      */
-    public function addPantrie(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    public function addPantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
     {
         $this->pantries[] = $pantries;
     
@@ -137,7 +148,7 @@ class User implements AdvancedUserInterface
      *
      * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
      */
-    public function removePantrie(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    public function removePantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
     {
         $this->pantries->removeElement($pantries);
     }
@@ -260,6 +271,11 @@ class User implements AdvancedUserInterface
     {
         return $this->enable;
     }
+
+    /*================================
+    *      GENERATED
+    *=================================
+    */
 
     /**
      * Get id

@@ -4,9 +4,7 @@
 
 {% block content %}
 
-<h1>User creation</h1>
-
-<form action="{{ path('user_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('geoarea_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Create</button>
@@ -15,7 +13,7 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('user') }}">
+        <a href="{{ path('geoarea') }}">
             Back to the list
         </a>
     </li>

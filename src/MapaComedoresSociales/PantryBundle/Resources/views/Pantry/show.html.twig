@@ -1,6 +1,10 @@
-<h1>Pantry</h1>
+{% extends '::frontend.html.twig' %}
 
-<table class="record_properties">
+{% block headline %}Pantry{% endblock headline %}
+
+{% block content %}
+
+<table class="table table-hover">
     <tbody>
         <tr>
             <th>Id</th>
@@ -55,7 +59,9 @@
     <li>
         <form action="{{ path('pantry_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button class="btn btn-danger" type="submit">Delete</button>
         </form>
     </li>
 </ul>
+
+{% endblock content %}

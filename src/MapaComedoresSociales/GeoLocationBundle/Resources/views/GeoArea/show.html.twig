@@ -1,12 +1,12 @@
 {% extends '::frontend.html.twig' %}
 
-{% block headline %}Usuario{% endblock headline %}
+{% block headline %}GeoArea{% endblock headline %}
 
 {% block content %}
 
 <div class="row-fluid">
     <div class="span8">
-        <table class="table table-hover">
+        <table class="table table-bordered">
             <tbody>
                 <tr>
                     <th>Id</th>
@@ -17,28 +17,32 @@
                     <td>{{ entity.name }}</td>
                 </tr>
                 <tr>
-                    <th>Lastname</th>
-                    <td>{{ entity.lastname }}</td>
+                    <th>Slug</th>
+                    <td>{{ entity.slug }}</td>
                 </tr>
                 <tr>
-                    <th>Password</th>
-                    <td>{{ entity.password }}</td>
+                    <th>Latitude</th>
+                    <td>{{ entity.latitude }}</td>
                 </tr>
                 <tr>
-                    <th>Salt</th>
-                    <td>{{ entity.salt }}</td>
+                    <th>Longitude</th>
+                    <td>{{ entity.longitude }}</td>
                 </tr>
                 <tr>
-                    <th>Email</th>
-                    <td>{{ entity.email }}</td>
+                    <th>Lft</th>
+                    <td>{{ entity.lft }}</td>
                 </tr>
                 <tr>
-                    <th>Enable</th>
-                    <td>{{ entity.enable }}</td>
+                    <th>Rgt</th>
+                    <td>{{ entity.rgt }}</td>
                 </tr>
                 <tr>
-                    <th>Active</th>
-                    <td>{{ entity.active }}</td>
+                    <th>Root</th>
+                    <td>{{ entity.root }}</td>
+                </tr>
+                <tr>
+                    <th>Level</th>
+                    <td>{{ entity.level }}</td>
                 </tr>
                 <tr>
                     <th>Created_at</th>
@@ -48,34 +52,28 @@
                     <th>Updated_at</th>
                     <td>{{ entity.updatedat|date('Y-m-d H:i:s') }}</td>
                 </tr>
-                <tr>
-                    <th>Last_login_at</th>
-                    <td>{{ entity.lastloginat|date('Y-m-d H:i:s') }}</td>
-                </tr>
-            </tbody>
+                </tbody>
         </table>
     </div>
     <div class="span4">
-        <ul class="well nav nav-list">
+        <ul class="well nav nav-list"">
             <li>
-                <a href="{{ path('user') }}">
+                <a href="{{ path('geoarea') }}">
                     Back to the list
                 </a>
             </li>
             <li>
-                <a href="{{ path('user_edit', { 'id': entity.id }) }}">
+                <a href="{{ path('geoarea_edit', { 'id': entity.id }) }}">
                     Edit
                 </a>
             </li>
             <li>
-                <br>
-                <form action="{{ path('user_delete', { 'id': entity.id }) }}" method="post">
-                        {{ form_row(delete_form.id) }}
-                        {{ form_row(delete_form._token) }}
+                <form action="{{ path('geoarea_delete', { 'id': entity.id }) }}" method="post">
+                    {{ form_widget(delete_form) }}
                     <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
             </li>
         </ul>
     </div>
-</div>
+
 {% endblock content %}

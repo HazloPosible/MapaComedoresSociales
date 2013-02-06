@@ -98,6 +98,30 @@ class Pantry
     private $enabled;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Return name + lastname for relationships
+     *
+     * @param void
+     * @return String
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /*================================
+     *      GENERATED
+     *================================
+     */
+
+    /**
      * Get id
      *
      * @return integer 
@@ -223,29 +247,6 @@ class Pantry
     }
 
     /**
-     * Set id_geoarea_fk
-     *
-     * @param string $idGeoareaFk
-     * @return Pantry
-     */
-    public function setIdGeoareaFk($idGeoareaFk)
-    {
-        $this->id_geoarea_fk = $idGeoareaFk;
-    
-        return $this;
-    }
-
-    /**
-     * Get id_geoarea_fk
-     *
-     * @return string 
-     */
-    public function getIdGeoareaFk()
-    {
-        return $this->id_geoarea_fk;
-    }
-
-    /**
      * Set created_at
      *
      * @param \DateTime $createAt
@@ -290,14 +291,7 @@ class Pantry
     {
         return $this->updated_at;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Set created_at
      *
@@ -370,10 +364,10 @@ class Pantry
     /**
      * Set geoarea
      *
-     * @param \MapaComedoresSociales\GeoAreaBundle\Entity\GeoArea $geoarea
+     * @param \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $geoarea
      * @return Pantry
      */
-    public function setGeoarea(\MapaComedoresSociales\GeoAreaBundle\Entity\GeoArea $geoarea)
+    public function setGeoarea(\MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $geoarea)
     {
         $this->geoarea = $geoarea;
     
@@ -383,7 +377,7 @@ class Pantry
     /**
      * Get geoarea
      *
-     * @return \MapaComedoresSociales\GeoAreaBundle\Entity\GeoArea 
+     * @return \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea
      */
     public function getGeoarea()
     {

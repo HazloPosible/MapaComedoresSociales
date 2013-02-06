@@ -74,7 +74,7 @@ class DefaultController extends Controller
 				$em->persist($user);
 				$em->flush();
 
-				return $hist->redirect($this->generateUrl('user'));
+				return $this->redirect($this->generateUrl('user'));
 			}
 		}
 
