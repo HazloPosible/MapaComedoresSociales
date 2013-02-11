@@ -1,0 +1,22 @@
+{% extends '::frontend.html.twig' %}
+
+{% block headline %}GeoArea creation{% endblock headline %}
+
+{% block content %}
+
+<form action="{{ path('geoarea_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('geoarea') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+
+{% endblock content %}

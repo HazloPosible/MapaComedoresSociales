@@ -1,0 +1,22 @@
+{% extends '::frontend.html.twig' %}
+
+{% block headline %}Pantry creation{% endblock headline %}
+
+{% block content %}
+
+<form action="{{ path('pantry_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('pantry') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+
+{% endblock content %}

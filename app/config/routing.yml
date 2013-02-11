@@ -1,37 +1,29 @@
+frontend:
+    resource: "@FrontendBundle/Resources/config/routing.yml"
+    prefix:   /
+
 comment:
     resource: "@CommentBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /comment
 
 geo_location:
-    resource: "@GeoLocationBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@GeoLocationBundle/Resources/config/routing.yml"
+    prefix:   /geo
 
 user:
-    resource: "@UserBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /user
 
 pantry:
-    resource: "@PantryBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@PantryBundle/Resources/config/routing.yml"
+    prefix:   /pantry
 
 backend:
     resource: "@BackendBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /backend
 
 _welcome:
     pattern: /
-    defaults: { _controller: FrontMainBundle:Main:index }
-
-front_main:
-    resource: "@FrontMainBundle/Resources/config/routing.yml"
-    prefix:   /
-
-# Internal routing configuration to handle ESI
-#_internal:
-#    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
-#    prefix:   /_internal
+    defaults: { _controller: FrontendBundle:Default:index }

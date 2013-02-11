@@ -1,0 +1,4 @@
+geo_location_geoarea:
+    resource: "@GeoLocationBundle/Resources/config/routing/geoarea.yml"
+    prefix:   /
+

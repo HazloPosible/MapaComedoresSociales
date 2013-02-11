@@ -1,0 +1,30 @@
+geoarea:
+    pattern:  /
+    defaults: { _controller: "GeoLocationBundle:GeoArea:index" }
+
+geoarea_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GeoLocationBundle:GeoArea:show" }
+
+geoarea_new:
+    pattern:  /new
+    defaults: { _controller: "GeoLocationBundle:GeoArea:new" }
+
+geoarea_create:
+    pattern:  /create
+    defaults: { _controller: "GeoLocationBundle:GeoArea:create" }
+    requirements: { _method: post }
+
+geoarea_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GeoLocationBundle:GeoArea:edit" }
+
+geoarea_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GeoLocationBundle:GeoArea:update" }
+    requirements: { _method: post }
+
+geoarea_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GeoLocationBundle:GeoArea:delete" }
+    requirements: { _method: post }

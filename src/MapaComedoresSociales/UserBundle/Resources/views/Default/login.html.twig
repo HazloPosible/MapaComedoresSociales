@@ -1,0 +1,39 @@
+{% extends '::frontend.html.twig' %}
+
+{% block headline %}Formulario de Login{% endblock headline %}
+
+{% block content %}
+
+    {% if error %}
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    	<strong>Error: </strong>{{ error.message }}
+    </div>
+    {% endif %}
+
+    <form class= "form-horizontal" action="{{ path('user_login_check') }}" method="post">
+        <div class="control-group">
+            <label class="control-label" for="username">Usuario:</label>
+            <div class="controls">
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Contraseña:</label>
+            <div class="controls">
+                <input type="password" id="password" name="_password" />
+            </div>
+        </div>
+    	<div class="control-group">
+
+            <div class="controls">
+                <label  class="checkbox" for="remember_me">
+                    <input type="checkbox" id="remember_me" name="_remember_me" checked />Recordarme
+                </label>
+                <input class="btn" type="submit" name="login" />
+            </div>
+    	</div>
+
+    </form>
+
+{% endblock content %}
