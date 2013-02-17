@@ -1,34 +1,31 @@
 <?php
 
-namespace MapaComedoresSociales\PantryBundle\Form;
+namespace MapaComedoresSociales\GeoLocationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RegisterType extends AbstractType
+class GeoAreaRegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name')
-            ->add('description')
-            ->add('address')
-            ->add('zip')
-            ->add('email')
-            ->add('geoarea')
+            ->add('latitude')
+            ->add('longitude')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MapaComedoresSociales\PantryBundle\Entity\Pantry'
+            'data_class' => 'MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea'
         ));
     }
 
     public function getName()
     {
-        return 'mapacomedoressociales_pantrybundle_registertype';
+        return 'GeoArea_Register';
     }
 }

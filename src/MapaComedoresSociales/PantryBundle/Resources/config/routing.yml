@@ -1,4 +1,7 @@
 pantry_pantry:
-    resource: "@PantryBundle/Resources/config/routing/pantry.yml"
-    prefix:   /
+  resource: "@PantryBundle/Resources/config/routing/pantry.yml"
+  prefix:   /
 
+pantry_register:
+   pattern: /register
+   defaults: { _controller: "PantryBundle:Default:register" }
