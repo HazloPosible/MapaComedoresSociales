@@ -12,3 +12,4 @@ parameters:
     locale: es # es for Spanish
     secret: # an md5 passphrase created by you
     database_path: null # database path by default null
+    security_encoding: "sha1"
