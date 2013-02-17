@@ -11,7 +11,6 @@ use MapaComedoresSociales\UserBundle\Form\RegisterType;
 
 class DefaultController extends Controller
 {
-
 	public function loginAction()
 	{
 		$request = $this->getRequest();
@@ -20,15 +19,13 @@ class DefaultController extends Controller
 		$error = $request->attributes->get(
 			SecurityContext::AUTHENTICATION_ERROR,
 			$session->get(SecurityContext::AUTHENTICATION_ERROR)
-
 		);
 
 		return $this->render('UserBundle:Default:login.html.twig', array(
 			'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-			'error' => $error 
+			'error' => $error
 			)
 		);
-
 	}
 
 	public function loginBoxAction()
@@ -44,10 +41,9 @@ class DefaultController extends Controller
 
 		return $this->render('UserBudnle:Default:login.html.twig', array(
 			'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-			'error' => $error 
+			'error' => $error
 			)
 		);
-
 	}
 
 	public function registerAction()
@@ -61,16 +57,11 @@ class DefaultController extends Controller
 			$form->bind($request);
 
 			if($form->isValid()) {
-				$encoder = $this->get('security.encoder_factory')
-										->getEncoder($user);
-				$user->setSalt(md5(time()));
-				$passwordCoding = $encoder->encodePassword(
-					$user->getPassword(),
-					$user->getSalt()
-				);
-				$user->setPassword($passwordCoding);
+				$userManager = $this->get('user_manager');
+				$userManager->updatePassword($user);
+				$user->setEnabled(true);
 
-				$em-> $this->getDoctrine()->getEntityManager();
+				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($user);
 				$em->flush();
 
@@ -83,6 +74,4 @@ class DefaultController extends Controller
 			array('form' => $form->createView())
 		);
 	}
-
-
 }

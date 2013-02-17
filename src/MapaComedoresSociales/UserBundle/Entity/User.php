@@ -71,11 +71,11 @@ class User implements AdvancedUserInterface
     private $comments;
 
     /**
-     * @var boolean $enable
+     * @var boolean $enabled
      *
-     * @ORM\Column(name="enable", type="boolean")
+     * @ORM\Column(name="enabled", type="boolean")
      */
-    private $enable;
+    private $enabled;
 
     /**
      * @var boolean $active
@@ -114,9 +114,9 @@ class User implements AdvancedUserInterface
     {
         $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-
-        $this->active = true;
-        $this->salt = md5(uniqid(null, true));
+        $this->active = false;
+        $this->enabled = true;
+        //$this->salt = md5(uniqid(null, true));
     }
 
     /**
@@ -139,7 +139,7 @@ class User implements AdvancedUserInterface
     public function addPantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
     {
         $this->pantries[] = $pantries;
-    
+
         return $this;
     }
 
@@ -162,7 +162,7 @@ class User implements AdvancedUserInterface
     public function addComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -205,7 +205,7 @@ class User implements AdvancedUserInterface
     public function eraseCredentials()
     {
 
-    } 
+    }
 
     // AdvancedUserInterface
     public function isAccountNonExpired()
@@ -226,7 +226,7 @@ class User implements AdvancedUserInterface
     public function isEnabled()
     {
         return $this->active;
-    }  
+    }
 
     public function isEqualTo(UserInterface $user)
     {
@@ -251,21 +251,21 @@ class User implements AdvancedUserInterface
         list ($this->id,
         ) = unserialize($serialized);
     }
-    
+
     /**
      * Get isAactive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function isActive()
     {
         return $this->active;
     }
-    
+
     /**
      * Get isEnable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function isEnable()
     {
@@ -280,7 +280,7 @@ class User implements AdvancedUserInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -296,14 +296,14 @@ class User implements AdvancedUserInterface
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -319,14 +319,14 @@ class User implements AdvancedUserInterface
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
-    
+
         return $this;
     }
 
     /**
      * Get lastname
      *
-     * @return string 
+     * @return string
      */
     public function getLastname()
     {
@@ -342,7 +342,7 @@ class User implements AdvancedUserInterface
     public function setPassword($password)
     {
         $this->password = $password;
-    
+
         return $this;
     }
 
@@ -355,7 +355,7 @@ class User implements AdvancedUserInterface
     public function setSalt($salt)
     {
         $this->salt = $salt;
-    
+
         return $this;
     }
 
@@ -368,14 +368,14 @@ class User implements AdvancedUserInterface
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -388,21 +388,21 @@ class User implements AdvancedUserInterface
      * @param boolean $enable
      * @return User
      */
-    public function setEnable($enable)
+    public function setEnabled($enabled)
     {
-        $this->enable = $enable;
-    
+        $this->enabled = $enabled;
+
         return $this;
     }
 
     /**
      * Get enable
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getEnable()
+    public function getEnabled()
     {
-        return $this->enable;
+        return $this->enabled;
     }
 
     /**
@@ -414,14 +414,14 @@ class User implements AdvancedUserInterface
     public function setActive($active)
     {
         $this->active = $active;
-    
+
         return $this;
     }
 
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -437,14 +437,14 @@ class User implements AdvancedUserInterface
     public function setCreatedAt($createdAt)
     {
         $this->created_at = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -460,14 +460,14 @@ class User implements AdvancedUserInterface
     public function setUpdatedAt($updatedAt)
     {
         $this->updated_at = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -483,14 +483,14 @@ class User implements AdvancedUserInterface
     public function setLastLoginAt($lastLoginAt)
     {
         $this->last_login_at = $lastLoginAt;
-    
+
         return $this;
     }
 
     /**
      * Get last_login_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastLoginAt()
     {
@@ -500,7 +500,7 @@ class User implements AdvancedUserInterface
     /**
      * Get pantries
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPantries()
     {
@@ -510,7 +510,7 @@ class User implements AdvancedUserInterface
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
