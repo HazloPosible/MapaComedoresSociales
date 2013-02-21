@@ -4,6 +4,12 @@
 
 {% block content %}
 
-    [Register Pantry Form]
+    <form action={{ path('pantry_register') }} method="POST" {{ form_enctype(form) }}>
+        {# render the task's only field: description #}
+        {{ form_widget(form) }}
+        <p>
+            <button class="btn btn-primary" type="submit">Register</button>
+        </p>
+    </form>
 
 {% endblock content%}

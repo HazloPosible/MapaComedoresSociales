@@ -1,0 +1,4 @@
+services:
+    user_manager: 
+        class: MapaComedoresSociales\UserBundle\Model\UserManager
+        arguments: [ @doctrine.orm.entity_manager, @security.encoder_factory, %security_encoding% ]

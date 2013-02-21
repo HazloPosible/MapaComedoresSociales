@@ -1,9 +1,16 @@
 {% extends 'MopaBootstrapBundle::base.html.twig' %}
+{% block head_style %}
+    {% stylesheets
+        'css/less/bootstrap/bootstrap_custom.less'
+    %}
 
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+{% endblock head_style %}
 {% block navbar '' %}
-{% block headline %}Bienvenido/a!{% endblock headline %}
+{% block title 'Mapa Comedores Sociales' %}
 {% block header %}
-<div class="navbar">
+<div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
 
@@ -27,8 +34,13 @@
   </div>
 </div>
 {% endblock header %}
-
+{% block page_header %}
+<div class="page-header span9">
+      <h1>{% block headline %}Mopa Bootstrap Bundle{% endblock headline %}</h1>
+</div>
+{% endblock page_header %}
 {% block content %}
+
 <div class="span9">
     <strong>Texto de prueba</strong>
 </div>
