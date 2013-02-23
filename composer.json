@@ -25,7 +25,11 @@
         "knplabs/knp-paginator-bundle": "dev-master",
         "knplabs/knp-menu-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "dev-master"
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "egeloen/google-map-bundle": "dev-master",
+        "willdurand/geocoder": "*",
+        "kriswallsmith/buzz": "*",
+        "lexik/form-filter-bundle": "dev-master"
     },
     "repositories": [
         {

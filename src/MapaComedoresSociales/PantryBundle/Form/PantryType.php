@@ -16,11 +16,6 @@ class PantryType extends AbstractType
             ->add('address')
             ->add('zip')
             ->add('email')
-            ->add('created_at')
-            ->add('updated_at')
-            ->add('enabled')
-            ->add('geoarea')
-            ->add('user')
         ;
     }
 

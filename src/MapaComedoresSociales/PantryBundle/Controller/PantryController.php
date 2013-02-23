@@ -2,6 +2,8 @@
 
 namespace MapaComedoresSociales\PantryBundle\Controller;
 
+use MapaComedoresSociales\PantryBundle\Form\PantryFilterType;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -167,6 +169,18 @@ class PantryController extends Controller
         }
 
         return $this->redirect($this->generateUrl('pantry'));
+    }
+
+    /**
+     * Filter pantries.
+     */
+    public function filterAction(Request $request)
+    {
+        $params = $request->request->get('mapacomedoressociales_pantrybundle_pantryfiltertype');
+        $geocoder = $this->get('ivory_google_map.geocoder');
+        $response = $geocoder->geocode($params['location']);
+        $result = current($response->getResults());
+        var_dump($result); die();
     }
 
     private function createDeleteForm($id)

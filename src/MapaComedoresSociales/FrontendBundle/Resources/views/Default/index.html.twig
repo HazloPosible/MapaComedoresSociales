@@ -1,1 +1,143 @@
 {% extends '::frontend.html.twig' %}
+
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span9">
+      <form action="{{ path('pantry_filter') }}" method="post" {{form_enctype(pantryFilterForm)}}>
+          {{ form_errors(pantryFilterForm )}}
+          <fieldset>
+             {{ form_rest(pantryFilterForm) }}
+          </fieldset>
+<!--           <div class="form-actions"> -->
+             <button class="btn btn-primary float-left" type="submit">Buscar</button>
+<!--           </div> -->
+
+        {{ google_map_css(map) }}
+        {{ google_map_container(map) }}
+        {{ google_map_js(map) }}
+      </form>
+      <hr>
+      <div class="row-fluid">
+        <div class="span4">
+          <div>
+            <h2>
+              Heading
+            </h2>
+            <p>
+              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+              ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+              sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed
+              odio dui.
+            </p>
+          </div>
+          <a class="btn" href="#">
+            View details »
+          </a>
+        </div>
+        <div class="span4">
+          <div>
+            <h2>
+              Heading
+            </h2>
+            <p>
+              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+              ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+              sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed
+              odio dui.
+            </p>
+          </div>
+          <a class="btn" href="#">
+            View details »
+          </a>
+        </div>
+        <div class="span4">
+          <div>
+            <h2>
+              Heading
+            </h2>
+            <p>
+              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+              ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+              sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed
+              odio dui.
+            </p>
+          </div>
+          <a class="btn" href="#">
+            View details »
+          </a>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span4">
+          <div>
+            <h2>
+              Heading
+            </h2>
+            <p>
+              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+              ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+              sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed
+              odio dui.
+            </p>
+          </div>
+          <a class="btn" href="#">
+            View details »
+          </a>
+        </div>
+        <div class="span4">
+          <div>
+            <h2>
+              Heading
+            </h2>
+            <p>
+              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+              ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+              sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed
+              odio dui.
+            </p>
+          </div>
+          <a class="btn" href="#">
+            View details »
+          </a>
+        </div>
+        <div class="span4">
+          <div>
+            <h2>
+              Heading
+            </h2>
+            <p>
+              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+              ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+              sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed
+              odio dui.
+            </p>
+          </div>
+          <a class="btn" href="#">
+            View details »
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="span3">
+      <div class="well sidebar-nav">
+          <h4>
+            <div>
+              Añadir comedor
+            </div>
+          </h4>
+          <form class= "form-vertical" action="{{ path('pantry_create') }}" method="post" {{form_enctype(pantryForm)}}>
+              {{ form_errors(pantryForm )}}
+              <fieldset>
+                 {{ form_rest(pantryForm) }}
+              </fieldset>
+              <input class="btn btn-primary" type="submit" value="Añade un comedor" />
+          </form>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock content %}
