@@ -8,6 +8,12 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
+            new MapaComedoresSociales\BackendBundle\BackendBundle(),
+            new MapaComedoresSociales\PantryBundle\PantryBundle(),
+            new MapaComedoresSociales\UserBundle\UserBundle(),
+            new MapaComedoresSociales\GeoLocationBundle\GeoLocationBundle(),
+            new MapaComedoresSociales\CommentBundle\CommentBundle(),
+            new MapaComedoresSociales\FrontendBundle\FrontendBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -23,13 +29,9 @@ class AppKernel extends Kernel
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new MapaComedoresSociales\BackendBundle\BackendBundle(),
-            new MapaComedoresSociales\PantryBundle\PantryBundle(),
-            new MapaComedoresSociales\UserBundle\UserBundle(),
-            new MapaComedoresSociales\GeoLocationBundle\GeoLocationBundle(),
-            new MapaComedoresSociales\CommentBundle\CommentBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new MapaComedoresSociales\FrontendBundle\FrontendBundle(),
+            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
+            new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

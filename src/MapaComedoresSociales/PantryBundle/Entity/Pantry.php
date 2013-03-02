@@ -51,17 +51,25 @@ class Pantry
     private $zip;
 
     /**
+     * @var float $latitude
+     *
+     * @ORM\Column(name="latitude", type="decimal", nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var float $longitude
+     *
+     * @ORM\Column(name="longitude", type="decimal", nullable=true)
+     */
+    private $longitude;
+
+    /**
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea")
-     * @ORM\JoinColumn(name="geoarea_id", referencedColumnName="id", nullable=false)
-     */
-    private $geoarea;
 
     /**
      * @var \DateTime $create_at
@@ -89,6 +97,12 @@ class Pantry
      * @ORM\OneToMany(targetEntity="MapaComedoresSociales\CommentBundle\Entity\Comment", mappedBy="pantry")
      **/
     private $comments;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="MapaComedoresSociales\CommentBundle\Entity\Type")
+     * @JoinColumn(name="type_id", referencedColumnName="id")
+     **/
+    private $type;
 
     /**
      * @var boolean $enabled
@@ -124,7 +138,7 @@ class Pantry
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -140,14 +154,14 @@ class Pantry
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -163,14 +177,14 @@ class Pantry
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -186,14 +200,14 @@ class Pantry
     public function setAddress($address)
     {
         $this->address = $address;
-    
+
         return $this;
     }
 
     /**
      * Get address
      *
-     * @return string 
+     * @return string
      */
     public function getAddress()
     {
@@ -209,14 +223,14 @@ class Pantry
     public function setZip($zip)
     {
         $this->zip = $zip;
-    
+
         return $this;
     }
 
     /**
      * Get zip
      *
-     * @return string 
+     * @return string
      */
     public function getZip()
     {
@@ -232,14 +246,14 @@ class Pantry
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -255,14 +269,14 @@ class Pantry
     public function setCreateAt($createAt)
     {
         $this->created_at = $createAt;
-    
+
         return $this;
     }
 
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreateAt()
     {
@@ -278,14 +292,14 @@ class Pantry
     public function setUpdateAt($updateAt)
     {
         $this->updated_at = $updateAt;
-    
+
         return $this;
     }
 
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdateAt()
     {
@@ -301,14 +315,14 @@ class Pantry
     public function setCreatedAt($createdAt)
     {
         $this->created_at = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -324,14 +338,14 @@ class Pantry
     public function setUpdatedAt($updatedAt)
     {
         $this->updated_at = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -347,41 +361,18 @@ class Pantry
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
-    
+
         return $this;
     }
 
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
         return $this->enabled;
-    }
-
-    /**
-     * Set geoarea
-     *
-     * @param \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $geoarea
-     * @return Pantry
-     */
-    public function setGeoarea(\MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea $geoarea)
-    {
-        $this->geoarea = $geoarea;
-    
-        return $this;
-    }
-
-    /**
-     * Get geoarea
-     *
-     * @return \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea
-     */
-    public function getGeoarea()
-    {
-        return $this->geoarea;
     }
 
     /**
@@ -393,14 +384,14 @@ class Pantry
     public function setUser(\MapaComedoresSociales\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \MapaComedoresSociales\UserBundle\Entity\User 
+     * @return \MapaComedoresSociales\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -416,7 +407,7 @@ class Pantry
     public function addComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -433,10 +424,57 @@ class Pantry
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
         return $this->comments;
     }
+
+    /**
+     * Set latitude
+     *
+     * @param float $latitude
+     * @return Pantry
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param float $longitude
+     * @return Pantry
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
 }

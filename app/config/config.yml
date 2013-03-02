@@ -70,3 +70,48 @@ stof_doctrine_extensions:
             default:
               timestampable: true
               tree: true
+
+# Ivory google Map Pluggins
+ivory_google_map:
+    map:
+        # If this flag is enabled, the map will load asynchronous
+        async: false
+
+        # If this flag is enabled, the map will autozoom on the overlays added
+        #auto_zoom: true
+
+        # Center coordinate of the map
+        # If the autozoom flag is enabled, the center is not used
+        center:
+            longitude: 2.1676915
+            latitude: 41.3809434
+            no_wrap: true
+
+        # Zoom of the map
+        # If the autozoom flag is enabled, the zoom is not used
+        zoom: 13
+
+        # Default map type
+        # Available map type : hybrid, roadmap, satellite, terrain
+        type: "roadmap"
+
+        # Map width
+        width: "100%"
+
+        # Map height
+        height: "400px"
+
+        # Custom map options
+        # By default, there is no map options
+        map_options:
+            disableDefaultUI: true
+            disableDoubleClickZoom: true
+
+        # Custom stylesheet options
+        # By default, there is no stylesheet options except width & height
+        stylesheet_options:
+            border: "1px solid #000"
+            background-color: "#fff"
+
+        # google map Api language, default en
+        language: es
