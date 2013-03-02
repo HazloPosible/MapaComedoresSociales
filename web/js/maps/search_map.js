@@ -1,1 +1,0 @@
-load_ivory_google_map();
