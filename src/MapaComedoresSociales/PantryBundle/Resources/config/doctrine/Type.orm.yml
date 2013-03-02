@@ -1,0 +1,17 @@
+MapaComedoresSociales\PantryBundle\Entity\Type:
+    type: entity
+    table: null
+    repositoryClass: MapaComedoresSociales\PantryBundle\Entity\TypeRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

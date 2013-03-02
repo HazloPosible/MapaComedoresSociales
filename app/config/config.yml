@@ -32,6 +32,8 @@ assetic:
         less:
             node: /usr/bin/node
             node_paths: [/usr/local/lib/node_modules]
+            #node: %assetic_node%
+            #node_paths: [%assetic_less_path%]
             apply_to: "\.less$"
         cssrewrite: ~
 
@@ -70,7 +72,8 @@ stof_doctrine_extensions:
             default:
               timestampable: true
               tree: true
-              
+
+# Ivory google Map Pluggins
 ivory_google_map:
     map:
         # If this flag is enabled, the map will load asynchronous
@@ -95,7 +98,7 @@ ivory_google_map:
         type: "roadmap"
 
         # Map width
-        width: "900px"
+        width: "100%"
 
         # Map height
         height: "400px"

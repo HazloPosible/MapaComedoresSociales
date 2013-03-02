@@ -6,17 +6,19 @@
   <div class="row-fluid">
     <div class="span9">
       <form action="{{ path('pantry_filter') }}" method="post" {{form_enctype(pantryFilterForm)}}>
-          {{ form_errors(pantryFilterForm )}}
-          <fieldset>
-             {{ form_rest(pantryFilterForm) }}
-          </fieldset>
-<!--           <div class="form-actions"> -->
-             <button class="btn btn-primary float-left" type="submit">Buscar</button>
-<!--           </div> -->
-
         {{ google_map_css(map) }}
         {{ google_map_container(map) }}
         {{ google_map_js(map) }}
+
+        {{ form_errors(pantryFilterForm )}}
+        <fieldset>
+          {{ form_rest(pantryFilterForm) }}
+        </fieldset>
+        <!--           <div class="form-actions"> -->
+        <button class="btn btn-primary float-left" type="submit">Buscar</button>
+        <!--           </div> -->
+        <br/>
+
       </form>
       <hr>
       <div class="row-fluid">
