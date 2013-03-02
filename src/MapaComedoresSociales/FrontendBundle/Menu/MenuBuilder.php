@@ -1,6 +1,8 @@
 <?php
 namespace MapaComedoresSociales\FrontendBundle\Menu;
 
+use Symfony\Component\Security\Core\SecurityContext;
+
 use Symfony\Component\HttpFoundation\Request;
 use Mopa\Bundle\BootstrapBundle\Navbar\AbstractNavbarMenuBuilder;
 

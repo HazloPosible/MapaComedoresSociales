@@ -10,3 +10,4 @@ services:
         scope: request
         calls:
             - [ setFormType, [ @mapacomedoressociales.form.type.pantry_type ] ]
+            - [ setGeocoder, [ @ivory_google_map.geocoder= ] ]

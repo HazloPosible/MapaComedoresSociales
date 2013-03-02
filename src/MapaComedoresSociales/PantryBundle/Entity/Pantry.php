@@ -54,14 +54,14 @@ class Pantry
     /**
      * @var float $latitude
      *
-     * @ORM\Column(name="latitude", type="decimal", nullable=true)
+     * @ORM\Column(name="latitude", type="float")
      */
     private $latitude;
 
     /**
      * @var float $longitude
      *
-     * @ORM\Column(name="longitude", type="decimal", nullable=true)
+     * @ORM\Column(name="longitude", type="float")
      */
     private $longitude;
 

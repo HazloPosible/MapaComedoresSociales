@@ -3,6 +3,8 @@
 *.DS_Store
 *.swp
 *.out
+.buildpath
+.settings
 
 # IDE files
 nbproject/

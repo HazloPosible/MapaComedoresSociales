@@ -21,9 +21,10 @@ class PantryType extends AbstractType
                 ;
                 break;
             case 2:
-                $builder->add('plainPassword', 'repeated', array(
-                'type' => 'password',
-                ));
+                $builder
+                    ->add('latitude', 'hidden')
+                    ->add('longitude', 'hidden')
+                ;
                 break;
         }
     }

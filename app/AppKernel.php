@@ -33,7 +33,8 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
-            new Craue\FormFlowBundle\CraueFormFlowBundle()
+            new Craue\FormFlowBundle\CraueFormFlowBundle(),
+            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
