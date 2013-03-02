@@ -6,20 +6,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use MapaComedoresSociales\PantryBundle\Entity\Pantry;
-use MapaComedoresSociales\PantryBundle\Form\RegisterType;
+use MapaComedoresSociales\PantryBundle\Form\PantryRegisterType;
 
 class DefaultController extends Controller {
 
     public function registerAction() {
+
         $request = $this->getRequest();
 
         $pantry = new Pantry();
-        $form = $this->createForm(new RegisterType(), $pantry);
+        $geo = new \MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea();
+
+        $form = $this->createForm(new PantryRegisterType(), $pantry);
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
 
             if($form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($pantry);
+                $em->persist($geo);
+                $em->flush();
 
                 return $this->redirect($this->generateUrl('user'));
 
@@ -27,7 +35,7 @@ class DefaultController extends Controller {
         }
         return $this->render(
             'PantryBundle:Default:register.html.twig',
-            array('from' => $form->createView())
+            array('form' => $form->createView())
         );
     }
 
