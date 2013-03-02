@@ -138,3 +138,19 @@ ivory_google_map:
         options:
             clickable: true
             flat: true
+    map_type_control:
+        # Map type ids of the map type control
+        # Available map type ids : roadmap, satellite, hybrid, terrain
+        map_type_ids: ["roadmap", "satellite"]
+
+        # Map type control position
+        # Available map type control position:
+        # - top_left, top_center, top_right
+        # - left_top, left_center, left_bottom
+        # - right_top, right_center, right_bottom
+        # - bottom_left, bottom_center, bottom_right
+        control_position: "top_left"
+
+        # Map type control style
+        # Availbale map type control style : default, dropdown_menu, horizontal_bar
+        map_type_control_style: "default"
