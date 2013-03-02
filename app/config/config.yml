@@ -24,16 +24,23 @@ twig:
 
 # Assetic Configuration
 assetic:
-    debug:          "%kernel.debug%"
+    debug:          %kernel.debug%
     use_controller: false
-#    bundles:        [ ]
-    #java: /usr/bin/java
+    java: /usr/bin/java
+    read_from:        %kernel.root_dir%/../web
+    write_to:         %kernel.root_dir%/../web
     filters:
+        cssrewrite: ~
         less:
             node: /usr/bin/node
             node_paths: [/usr/local/lib/node_modules]
             apply_to: "\.less$"
-        cssrewrite: ~
+        cssembed:
+             jar: %kernel.root_dir%/Resources/java/cssembed-0.4.5.jar
+        yui_css:
+             jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
+        yui_js:
+             jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
 
 # Doctrine Configuration
 doctrine:
@@ -74,7 +81,7 @@ stof_doctrine_extensions:
 ivory_google_map:
     map:
         # If this flag is enabled, the map will load asynchronous
-        async: false
+        async: true
 
         # If this flag is enabled, the map will autozoom on the overlays added
         #auto_zoom: true

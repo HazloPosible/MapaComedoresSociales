@@ -29,7 +29,8 @@
         "egeloen/google-map-bundle": "dev-master",
         "willdurand/geocoder": "*",
         "kriswallsmith/buzz": "*",
-        "lexik/form-filter-bundle": "dev-master"
+        "lexik/form-filter-bundle": "dev-master",
+        "craue/formflow-bundle": "dev-master"
     },
     "repositories": [
         {

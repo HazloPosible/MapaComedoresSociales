@@ -1,10 +1,7 @@
 {% extends 'MopaBootstrapBundle::base.html.twig' %}
 {% block head_style %}
-    {% stylesheets
-        'css/less/bootstrap/bootstrap_custom.less'
-    %}
-
-    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% stylesheets 'css/less/bootstrap/bootstrap_custom.less' %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
 {% endblock head_style %}
 {% block navbar '' %}
@@ -52,11 +49,6 @@
 {% endblock footer %}
 
 {% block foot_script %}
-    {# To only use a subset or add more js overwrite and copy paste this block
-    To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
-    Otherwise the regeneration is done on every load in dev more with use_controller: true
-     #}
-
     {% javascripts
         'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'
         '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-transition.js'
@@ -74,8 +66,11 @@
         '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
         '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
         '@MopaBootstrapBundle/Resources/public/js/eyecon-bootstrap-datepicker.js'
-        'js/main.js'
+        'js/libs/validation/dist/jquery.validate.min.js'
+        'js/libs/validation/dist/additional-methods.min.js'
+        'js/libs/validation/localization/messages_es.js'
     %}
+
         <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 {% endblock foot_script %}

@@ -1,0 +1,44 @@
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    java: /usr/bin/java
+    read_from:        %kernel.root_dir%/../web
+    write_to:         %kernel.root_dir%/../web
+    filters:
+        cssrewrite: ~
+        less:
+            node: /usr/bin/node
+            node_paths: [/usr/local/lib/node_modules]
+            apply_to: "\.less$"
+        cssembed:
+             jar: %kernel.root_dir%/Resources/java/cssembed-0.4.5.jar
+        yui_css:
+             jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
+        yui_js:
+             jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
+    assets:
+        main:
+            inputs:
+                - http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-transition.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-alert.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-modal.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-dropdown.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-scrollspy.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tab.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tooltip.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-popover.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-button.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-collapse.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-carousel.js
+                - @MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-typeahead.js
+                - @MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js
+                - @MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js
+                - @MopaBootstrapBundle/Resources/public/js/eyecon-bootstrap-datepicker.js
+                - %kernel.root_dir%/../web/js/libs/validation/jquery.validate.min.js
+                - %kernel.root_dir%/../web/js/libs/validation/additional-methods.min.js
+                - %kernel.root_dir%/../web/js/libs/validation/localization/messages_es.js
+            filters:
+                - yui_js
+            options:
+                output: js/compiled/main.js

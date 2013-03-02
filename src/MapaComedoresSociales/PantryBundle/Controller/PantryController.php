@@ -59,11 +59,30 @@ class PantryController extends Controller
     public function newAction()
     {
         $entity = new Pantry();
-        $form   = $this->createForm(new PantryType(), $entity);
+        $flow = $this->get('mapacomedoressociales.form.flow.pantry_type_flow');
+        $flow->bind($entity);
+
+        // form of the current step
+        $form = $flow->createForm($entity);
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData();
+
+            if ($flow->nextStep()) {
+                // form for the next step
+                $form = $flow->createForm($entity);
+            } else {
+                // flow finished
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('welcome'));
+            }
+        }
 
         return $this->render('PantryBundle:Pantry:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                'form' => $form->createView(),
+                'flow' => $flow
         ));
     }
 

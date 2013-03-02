@@ -2,6 +2,8 @@
 
 namespace MapaComedoresSociales\FrontendBundle\Controller;
 
+use Ivory\GoogleMap\Overlays\InfoWindow;
+
 use Ivory\GoogleMap\Overlays\Animation;
 
 use MapaComedoresSociales\PantryBundle\Form\PantryFilterType;
@@ -34,6 +36,11 @@ class DefaultController extends Controller
                 'flat' => true
         ));
 
+        $infoWindow = new InfoWindow();
+        $infoWindow->setContent('CONTENIDO!');
+
+        $marker->setInfoWindow($infoWindow);
+
         $map->addMarker($marker);
         $marker = $this->get('ivory_google_map.marker');
         $marker->setPrefixJavascriptVariable('marker_2_');
@@ -44,7 +51,10 @@ class DefaultController extends Controller
                 'clickable' => true,
                 'flat' => true
         ));
+        $infoWindow = new InfoWindow();
+        $infoWindow->setContent('CONTENIDO!');
 
+        $marker->setInfoWindow($infoWindow);
         $map->addMarker($marker);
         $pantryFilterForm = $this->createForm(new PantryFilterType());
 

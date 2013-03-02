@@ -1,0 +1,12 @@
+services:
+    mapacomedoressociales.form.type.pantry_type: 
+        class: MapaComedoresSociales\PantryBundle\Form\PantryType
+        tags:
+            - { name: form.type, alias: pantryType }
+    
+    mapacomedoressociales.form.flow.pantry_type_flow:
+        class: MapaComedoresSociales\PantryBundle\Form\PantryTypeFlow
+        parent: craue.form.flow
+        scope: request
+        calls:
+            - [ setFormType, [ @mapacomedoressociales.form.type.pantry_type ] ]

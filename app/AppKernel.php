@@ -31,7 +31,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
-            new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle()
+            new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+            new Craue\FormFlowBundle\CraueFormFlowBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -141,3 +141,13 @@
 </div>
 </div>
 {% endblock content %}
+
+{% block foot_script %}
+    {{ parent() }}
+    {% javascripts
+        'js/maps/search_map.js'
+    %}
+
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock foot_script %}

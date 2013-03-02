@@ -10,19 +10,29 @@ class PantryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name')
-            ->add('description')
-            ->add('address')
-            ->add('zip')
-            ->add('email')
-        ;
+        switch ($options['flowStep']) {
+            case 1:
+                $builder
+                    ->add('name')
+                    ->add('description')
+                    ->add('address')
+                    ->add('zip')
+                    ->add('email')
+                ;
+                break;
+            case 2:
+                $builder->add('plainPassword', 'repeated', array(
+                'type' => 'password',
+                ));
+                break;
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MapaComedoresSociales\PantryBundle\Entity\Pantry'
+            'data_class' => 'MapaComedoresSociales\PantryBundle\Entity\Pantry',
+            'flowStep' => 1
         ));
     }
 
