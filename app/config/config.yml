@@ -32,6 +32,8 @@ assetic:
         less:
             node: /usr/bin/node
             node_paths: [/usr/local/lib/node_modules]
+            #node: %assetic_node%
+            #node_paths: [%assetic_less_path%]
             apply_to: "\.less$"
         cssrewrite: ~
 
