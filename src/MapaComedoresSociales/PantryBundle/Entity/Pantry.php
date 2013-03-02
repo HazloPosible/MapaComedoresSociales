@@ -4,6 +4,7 @@ namespace MapaComedoresSociales\PantryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use MapaComedoresSociales\PantryBundle\Entity\Type;
 
 /**
  * MapaComedoresSociales\PantryBundle\Entity\Pantry
@@ -99,8 +100,7 @@ class Pantry
     private $comments;
 
      /**
-     * @ORM\ManyToOne(targetEntity="MapaComedoresSociales\CommentBundle\Entity\Type")
-     * @JoinColumn(name="type_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Type")
      **/
     private $type;
 
