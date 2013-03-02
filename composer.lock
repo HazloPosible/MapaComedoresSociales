@@ -383,13 +383,14 @@
                 "php": ">=5.3.2",
                 "symfony/framework-bundle": ">=2.1.0,<2.3-dev"
             },
+            "time": "2013-01-12 20:06:22",
             "type": "symfony-bundle",
             "autoload": {
                 "psr-0": {
                     "Doctrine\\Bundle\\MigrationsBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -413,8 +414,7 @@
                 "dbal",
                 "migrations",
                 "schema"
-            ],
-            "time": "2013-01-12 20:06:22"
+            ]
         },
         {
             "name": "doctrine/migrations",
@@ -441,13 +441,14 @@
             "suggest": {
                 "symfony/console": "to run the migration from the console"
             },
+            "time": "2012-12-27 16:39:29",
             "type": "library",
             "autoload": {
                 "psr-0": {
                     "Doctrine\\DBAL\\Migrations": "lib"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -467,8 +468,7 @@
             "keywords": [
                 "database",
                 "migrations"
-            ],
-            "time": "2012-12-27 16:39:29"
+            ]
         },
         {
             "name": "doctrine/orm",

@@ -2,6 +2,8 @@ services:
     mapa_comedores_sociales.frontend_bundle.menu.main.builder:
         class: MapaComedoresSociales\FrontendBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory"]
+        calls:
+            - [setSecurityContext, [@security.context]]
 
     mapa_comedores_sociales.frontend_bundle.menu.main:
         class: Knp\Menu\MenuItem # the service definition requires setting the class

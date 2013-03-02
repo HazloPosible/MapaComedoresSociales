@@ -35,6 +35,16 @@ class Type
      */
     private $description;
 
+    /**
+     * Return name + lastname for relationships
+     *
+     * @param void
+     * @return String
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get id

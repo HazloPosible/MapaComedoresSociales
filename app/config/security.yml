@@ -20,10 +20,11 @@ security:
                 check_path: user_login_check
             logout:
                 path: user_logout
+                target: _welcome
             remember_me:
                 key: "5445ASDASD" # "%secret%"
                 lifetime: 31536000 # 365 days in seconds
-                path: /
+                path: /.*
                 domain: ~ # Defaults to the current domain from $_SERVER
 
     access_control:

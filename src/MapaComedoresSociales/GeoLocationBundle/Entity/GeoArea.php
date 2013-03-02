@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * MapaComedoresSociales\GeoLocationBundle\Entity\GeoArea
  *
  * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="geoareas")
+ * @ORM\Table(name="Geoarea")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class GeoArea
