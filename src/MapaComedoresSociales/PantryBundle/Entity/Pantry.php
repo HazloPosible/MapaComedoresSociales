@@ -98,6 +98,12 @@ class Pantry
      **/
     private $comments;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="MapaComedoresSociales\CommentBundle\Entity\Type")
+     * @JoinColumn(name="type_id", referencedColumnName="id")
+     **/
+    private $type;
+
     /**
      * @var boolean $enabled
      *
