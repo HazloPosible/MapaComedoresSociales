@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+
 framework:
     #esi:             ~
     #translator:      { fallback: "%locale%" }
@@ -82,9 +83,11 @@ stof_doctrine_extensions:
 
 # Ivory google Map Pluggins
 ivory_google_map:
+    pan_control:
+        control_position: top_left
     map:
         # If this flag is enabled, the map will load asynchronous
-        async: true
+        async: false
 
         # If this flag is enabled, the map will autozoom on the overlays added
         #auto_zoom: true
@@ -124,3 +127,30 @@ ivory_google_map:
 
         # google map Api language, default en
         language: es
+    marker:
+        # Marker animation
+        # Available animation: bounce, drop
+        # By default, there is no animation
+        animation: "drop"
+
+        # Custom marker options
+        # By default there is no marker options
+        options:
+            clickable: true
+            flat: true
+    map_type_control:
+        # Map type ids of the map type control
+        # Available map type ids : roadmap, satellite, hybrid, terrain
+        map_type_ids: ["roadmap", "satellite"]
+
+        # Map type control position
+        # Available map type control position:
+        # - top_left, top_center, top_right
+        # - left_top, left_center, left_bottom
+        # - right_top, right_center, right_bottom
+        # - bottom_left, bottom_center, bottom_right
+        control_position: "top_left"
+
+        # Map type control style
+        # Availbale map type control style : default, dropdown_menu, horizontal_bar
+        map_type_control_style: "default"

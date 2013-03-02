@@ -3,12 +3,25 @@
 {% block headline %}Pantry creation{% endblock headline %}
 
 {% block content %}
-
-<form action="{{ path('pantry_create') }}" method="post" {{ form_enctype(form) }}>
+{#
+<div>
+    Steps:
+    {% include 'MopaBootstrapBundle:Form:formflow_stepList.html.twig' %}
+</div>
+#}
+{{ 'Corrige, si es necesario, la posición del marcador en el mapa'|trans }}
+<form id"pantry_new" action="{{ path('pantry_new') }}" method="post" {{ form_enctype(form) }}>
+{% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' with {'formident': '#pantry_new'}%}
+    {{ form_errors(form) }}
     {{ form_widget(form) }}
-    <p>
-        <button class="btn btn-primary" type="submit">Create</button>
-    </p>
+
+    {% if flow.getCurrentStep() == 2 %}
+        {{ google_map_css(map) }}
+        {{ google_map_container(map) }}
+        {{ google_map_js(map) }}
+    {% endif %}
+
+    {% include 'MopaBootstrapBundle:Form:formflow_buttons.html.twig' %}
 </form>
 
 <ul class="record_actions">
@@ -20,3 +33,11 @@
 </ul>
 
 {% endblock content %}
+{% block foot_script %}
+    {{ parent() }}
+    {% javascripts
+        'js/pantry/create.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock foot_script %}

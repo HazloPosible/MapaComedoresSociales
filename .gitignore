@@ -3,12 +3,15 @@
 *.DS_Store
 *.swp
 *.out
+.buildpath
+.settings
 
 # IDE files
 nbproject/
 .idea/
 *.tmproj
 *.project
+.codeintel
 
 # Symfony files and folders
 app/config/parameters.yml
@@ -19,3 +22,12 @@ app/cache/*
 app/logs/*
 build/
 vendor/*
+
+#assets
+web/js/foot_compiled*
+web/js/head_compiled*
+web/css/bab9907*
+web/css/3c2f3ac*
+web/css/5a72185*
+web/css/6d2aa3d*
+web/css/5c224b4*

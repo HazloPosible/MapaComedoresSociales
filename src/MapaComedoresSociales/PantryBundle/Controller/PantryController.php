@@ -2,6 +2,8 @@
 
 namespace MapaComedoresSociales\PantryBundle\Controller;
 
+use Ivory\GoogleMap\Controls\ControlPosition;
+
 use MapaComedoresSociales\PantryBundle\Form\PantryFilterType;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -60,14 +62,31 @@ class PantryController extends Controller
     {
         $entity = new Pantry();
         $flow = $this->get('mapacomedoressociales.form.flow.pantry_type_flow');
+//         $flow->reset();
         $flow->bind($entity);
 
         // form of the current step
         $form = $flow->createForm($entity);
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
-
             if ($flow->nextStep()) {
+                if ($flow->getCurrentStep() === 2) {
+                    $map = $this->get('ivory_google_map.map');
+                    $panControl = $this->get('ivory_google_map.pan_control');
+                    $marker = $this->get('ivory_google_map.marker');
+
+                    $map->setCenter($entity->getLatitude(), $entity->getLongitude(), true);
+                    $map->setMapOption('zoom', 18);
+                    $map->setPanControl($panControl);
+                    $map->setPanControl(ControlPosition::TOP_LEFT);
+
+                    $marker->setJavascriptVariable('marker_final');
+                    $marker->setPosition($entity->getLatitude(), $entity->getLongitude());
+                    $marker->setOption('draggable', true);
+
+                    // Add the marker to the map
+                    $map->addMarker($marker);
+                }
                 // form for the next step
                 $form = $flow->createForm($entity);
             } else {
@@ -75,14 +94,16 @@ class PantryController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entity);
                 $em->flush();
+                $flow->reset();
 
-                return $this->redirect($this->generateUrl('welcome'));
+                return $this->redirect($this->generateUrl('_welcome'));
             }
         }
 
         return $this->render('PantryBundle:Pantry:new.html.twig', array(
                 'form' => $form->createView(),
-                'flow' => $flow
+                'flow' => $flow,
+                'map' => isset($map) ? $map : null
         ));
     }
 

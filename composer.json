@@ -31,7 +31,8 @@
         "kriswallsmith/buzz": "*",
         "lexik/form-filter-bundle": "dev-master",
         "craue/formflow-bundle": "dev-master",
-        "doctrine/doctrine-migrations-bundle": "dev-master"
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        "raulfraile/ladybug-bundle": "dev-master"
     },
     "repositories": [
         {

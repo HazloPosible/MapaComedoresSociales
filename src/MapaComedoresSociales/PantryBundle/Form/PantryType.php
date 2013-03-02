@@ -10,6 +10,7 @@ class PantryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+<<<<<<< HEAD
         $builder
             ->add('name')
             ->add('description')
@@ -20,6 +21,25 @@ class PantryType extends AbstractType
             ->add('email')
             ->add('type')
         ;
+=======
+        switch ($options['flowStep']) {
+            case 1:
+                $builder
+                    ->add('name')
+                    ->add('description')
+                    ->add('address')
+                    ->add('zip')
+                    ->add('email')
+                ;
+                break;
+            case 2:
+                $builder
+                    ->add('latitude', 'hidden')
+                    ->add('longitude', 'hidden')
+                ;
+                break;
+        }
+>>>>>>> 5dc93d3a912c30ecd8c82e223c62d2ad2d26fa94
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
