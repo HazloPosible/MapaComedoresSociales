@@ -100,7 +100,7 @@ class Pantry
 
      /**
      * @ORM\ManyToOne(targetEntity="MapaComedoresSociales\CommentBundle\Entity\Type")
-     * @JoinColumn(name="type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      **/
     private $type;
 

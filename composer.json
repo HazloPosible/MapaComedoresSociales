@@ -30,7 +30,8 @@
         "willdurand/geocoder": "*",
         "kriswallsmith/buzz": "*",
         "lexik/form-filter-bundle": "dev-master",
-        "craue/formflow-bundle": "dev-master"
+        "craue/formflow-bundle": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master"
     },
     "repositories": [
         {
