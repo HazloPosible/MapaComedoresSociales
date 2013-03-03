@@ -34,7 +34,8 @@ class AppKernel extends Kernel
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
-            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle()
+            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
+            new Knp\Bundle\DisqusBundle\KnpDisqusBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

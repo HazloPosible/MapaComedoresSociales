@@ -5,7 +5,6 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 use Symfony\Component\HttpFoundation\Request;
 use Mopa\Bundle\BootstrapBundle\Navbar\AbstractNavbarMenuBuilder;
-use Symfony\Component\Security\Core\SecurityContext;
 
 class MenuBuilder extends AbstractNavbarMenuBuilder
 {

@@ -477,4 +477,27 @@ class Pantry
         return $this->longitude;
     }
 
+    /**
+     * Set type
+     *
+     * @param Type $type
+     * @return Pantry
+     */
+    public function setType(Type $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return Type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
 }

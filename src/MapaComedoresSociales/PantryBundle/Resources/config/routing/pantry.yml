@@ -28,7 +28,7 @@ pantry_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "PantryBundle:Pantry:delete" }
     requirements: { _method: post }
-    
+
 pantry_filter:
     pattern:  /filter
     defaults: { _controller: "PantryBundle:Pantry:filter" }
