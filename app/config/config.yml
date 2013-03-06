@@ -156,12 +156,12 @@ ivory_google_map:
         map_type_control_style: "default"
 
 #disqus
-knp_disqus:
-    api_key: %knp_disqus.api_key%
-    secret_key: %knp_disqus.secret_key% # optional, for SSO auth only
-    forums:
-        lorem:
-            shortname: %knp_disqus.lorem.shortname%
-            #cache: my_cache_for_lorem # cache template key, usage described below
-        ipsum:
-            shortname: %knp_disqus.ipsum.shortname%
+# knp_disqus:
+#     api_key: %knp_disqus.api_key%
+#     secret_key: %knp_disqus.secret_key% # optional, for SSO auth only
+#     forums:
+#         lorem:
+#             shortname: %knp_disqus.lorem.shortname%
+#             #cache: my_cache_for_lorem # cache template key, usage described below
+#         ipsum:
+#             shortname: %knp_disqus.ipsum.shortname%
