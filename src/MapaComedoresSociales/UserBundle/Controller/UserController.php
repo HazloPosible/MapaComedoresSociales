@@ -58,7 +58,7 @@ class UserController extends Controller
     {
         $entity = new User();
         $form   = $this->createForm(new UserType(), $entity);
-die('really?');
+        die('really?');
         return $this->render('UserBundle:User:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),

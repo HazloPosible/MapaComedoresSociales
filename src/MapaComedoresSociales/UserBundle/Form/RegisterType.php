@@ -15,11 +15,15 @@ class RegisterType extends AbstractType
             ->add('lastname')
             ->add('password', 'repeated', array(
                 'type' => 'password',
+                'first_options' => array('label' => 'Password'),
+                'second_options' => array('label' => 'Password confirmation'),
                 'invalid_message' => 'Las contraseñas no coinciden',
                 'options' => array('label' => 'password')
             ))
             ->add('email', 'repeated', array(
                 'type' => 'email',
+                'first_options' => array('label' => 'Email'),
+                'second_options' => array('label' => 'Email confirmation'),
                 'invalid_message' => 'Los emails no coinciden',
                 'options' => array('label' => 'email')
             ))

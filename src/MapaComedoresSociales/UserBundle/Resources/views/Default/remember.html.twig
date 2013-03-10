@@ -1,0 +1,29 @@
+{% extends '::frontend.html.twig' %}
+
+{% block headline %}Recuperar contraseña{% endblock headline %}
+
+{% block content %}
+    
+
+    <form class= "form-horizontal" action="{{ path('user_remember') }}" method="post" {{
+        form_enctype(form) }}>
+
+        {{ form_errors(form )}}
+
+        <fieldset>
+            <legend>Volver a establecer contraseña</legend>
+            <p>
+                Introduce la dirección de correo electrónico que utilizaste a la hora de crear 
+                la cuenta. A continuación, pulsa el botón de envío y recibirás un correo electrónico 
+                con instrucciones para reiniciar tu contraseña o recuperar tu nombre de usuario.
+            </p>
+            <br>
+            {{ form_row(form.email) }}
+            {{ form_rest(form) }}
+        </fieldset>
+        <div class="control-group">
+            <input class="btn btn-primary" type="submit" value="Enviar" />
+        </div>
+    </form>
+
+{% endblock content %}
