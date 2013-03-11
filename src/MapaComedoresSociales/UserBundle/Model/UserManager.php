@@ -18,14 +18,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 * @license  
 * @link     
 */
-abstract class UserManager implements UserManagerInterface {
+class UserManager implements UserManagerInterface {
 
     protected $em;
     protected $encoderFactory;
     protected $encoding;
 
     /**
-     * Constructor
+     * Constructor.
      * 
      * @param EntityManager             $em entity manager object at Doctrine.
      * @param EncoderFactoryInterface   $encoderFactory type of encoder for password.
@@ -42,21 +42,45 @@ abstract class UserManager implements UserManagerInterface {
         $this->encoding = $encoding;
     }
 
+
+    /**
+    * {@inheritDoc}
+    */
     public function createUser() {
-
-
 
     }
 
     /**
-     * Update a user password.
-     * 
-     * @param UserInterface $user.
-     *
-     * @access public
-     *
-     * @return void.
-     */
+    * {@inheritDoc}
+    */
+    public function deleteUser() {
+
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    public function findUserBy(array $criteria) {
+
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    public function findUserByUsername($username) {
+
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    public function updateUser(UserInterface $user) {
+
+    }
+
+    /**
+    * {@inheritDoc}
+    */
     public function updatePassword(UserInterface $user)
     {
         $encoder = $this->encoderFactory->getEncoder($user);

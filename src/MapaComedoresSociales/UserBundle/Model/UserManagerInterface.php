@@ -19,8 +19,24 @@ namespace MapaComedoresSociales\UserBundle\Model;
 interface UserManagerInterface {
     
 
+    /**
+     * Return an empty user.
+     * 
+     * @access public
+     *
+     * @return UserInterface
+     */
     public function createUser();
 
+    /**
+     * Delete an user instance. 
+     * 
+     * @param UserInterface $user
+     *
+     * @access public
+     *
+     * @return void
+     */
     public function deleteUser(UserInterface $user);
 
     public function findUserBy(array $criteria);
