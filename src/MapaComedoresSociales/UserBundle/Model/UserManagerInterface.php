@@ -16,9 +16,8 @@ namespace MapaComedoresSociales\UserBundle\Model;
 * @license  
 * @link     
 */
-interface UserManagerInterface {
-    
-
+interface UserManagerInterface 
+{
     /**
      * Return an empty user.
      * 
@@ -39,11 +38,58 @@ interface UserManagerInterface {
      */
     public function deleteUser(UserInterface $user);
 
+    /**
+     * findUserBy
+     * 
+     * @param mixed \array Description.
+     *
+     * @access public
+     *
+     * @return mixed Value.
+     */
     public function findUserBy(array $criteria);
 
+    /**
+     * findUserByUsername
+     * 
+     * @param mixed $username Description.
+     *
+     * @access public
+     *
+     * @return mixed Value.
+     */
     public function findUserByUsername($username);
 
+    /**
+     * findUsers
+     * 
+     * @access public
+     *
+     * @return mixed Value.
+     */
+    public function findUsers();
+
+    /**
+     * updateUser
+     * 
+     * @param mixed \UserInterface Description.
+     *
+     * @access public
+     *
+     * @return mixed Value.
+     */
     public function updateUser(UserInterface $user);
+
+    /**
+     * reloadUser
+     * 
+     * @param mixed \UserInterface Description.
+     *
+     * @access public
+     *
+     * @return mixed Value.
+     */
+    public function reloadUser(UserInterface $user);
 
     /**
      * Updates a user password if a plain password is set
@@ -55,7 +101,6 @@ interface UserManagerInterface {
      * @return void
      */
     public function updatePassword(UserInterface $user);
-
 }
 
 

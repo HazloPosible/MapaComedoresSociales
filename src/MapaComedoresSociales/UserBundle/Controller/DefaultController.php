@@ -10,10 +10,10 @@ use MapaComedoresSociales\UserBundle\Form\RememberPasswordType;
 use MapaComedoresSociales\UserBundle\Form\ChangePasswordType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class DefaultController extends Controller {
-
-	public function loginAction() {
-
+class DefaultController extends Controller 
+{
+	public function loginAction() 
+    {
         $request = $this->getRequest();
 		$session = $request->getSession();
 
@@ -29,8 +29,8 @@ class DefaultController extends Controller {
 		);
 	}
 
-	public function loginBoxAction() {
-
+	public function loginBoxAction() 
+    {
 		$request = $this->getRequest();
 		$session = $request->getSession();
 
@@ -47,8 +47,8 @@ class DefaultController extends Controller {
 		);
 	}
 
-	public function registerAction() {
-
+	public function registerAction() 
+    {
 		$request = $this->getRequest();
 
 		$user = new User();
@@ -79,8 +79,8 @@ class DefaultController extends Controller {
 	}
 
 	// TODO: need check and refactor
-    public function rememberPasswordAction() {
-
+    public function rememberPasswordAction() 
+    {
         $request = $this->getRequest();
 
         $form = $this->createForm(new RememberPasswordType());
@@ -120,8 +120,8 @@ class DefaultController extends Controller {
         );
     }
 
-    public function changePasswordAction() {
-
+    public function changePasswordAction() 
+    {
         $user = $this->get('security.context')->getToken()->getUser();
     	if (!is_object($user) || !$user instanceof User) {
     		throw new AccessDeniedException('Este usuario no tiene permisos de acceso a esta sección');
@@ -149,8 +149,6 @@ class DefaultController extends Controller {
         	'UserBundle:Default:change_password.html.twig',
         	array('form' => $form->createView())
         );
-
     }
-
 
 }
