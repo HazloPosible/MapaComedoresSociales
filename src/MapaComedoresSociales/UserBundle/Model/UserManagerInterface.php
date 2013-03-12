@@ -39,38 +39,38 @@ interface UserManagerInterface
     public function deleteUser(UserInterface $user);
 
     /**
-     * findUserBy
+     * Find user according to some criteria
      * 
-     * @param mixed \array Description.
+     * @param array $criteria.
      *
      * @access public
      *
-     * @return mixed Value.
+     * @return UserInterface $user.
      */
     public function findUserBy(array $criteria);
 
     /**
-     * findUserByUsername
+     * Find user by Username
      * 
-     * @param mixed $username Description.
+     * @param string $username.
      *
      * @access public
      *
-     * @return mixed Value.
+     * @return UserInterface $user.
      */
     public function findUserByUsername($username);
 
     /**
-     * findUsers
+     * Find all user
      * 
      * @access public
      *
-     * @return mixed Value.
+     * @return $users.
      */
     public function findUsers();
 
     /**
-     * updateUser
+     * updateUserName
      * 
      * @param mixed \UserInterface Description.
      *
@@ -78,23 +78,34 @@ interface UserManagerInterface
      *
      * @return mixed Value.
      */
-    public function updateUser(UserInterface $user);
+    public function updateUserName(UserInterface $user);
 
     /**
-     * reloadUser
+     * Update user information
      * 
-     * @param mixed \UserInterface Description.
+     * @param UserInterface $user.
      *
      * @access public
      *
-     * @return mixed Value.
+     * @return void.
+     */
+    public function updateUser(UserInterface $user);
+
+    /**
+     * Reload user entity
+     * 
+     * @param UserInterface $user.
+     *
+     * @access public
+     *
+     * @return void.
      */
     public function reloadUser(UserInterface $user);
 
     /**
      * Updates a user password if a plain password is set
      * 
-     * @param mixed \User Description.
+     * @param UserInterface $user.
      *
      * @access public
      *

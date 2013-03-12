@@ -91,12 +91,22 @@ class UserManager implements UserManagerInterface
         return $this->userRepository->findAll();
     }
 
+
+    public function updateUserName(UserInterface $user);
+    {
+        
+    }
+
     /**
     * {@inheritDoc}
     */
     public function updateUser(UserInterface $user) 
     {
-        // TODO: Must be studied
+        $this->updateUserName($user));
+        $this->updatePassword($user)
+
+        $this->em->persist($user);
+        $this->em->flush();
     }
 
     /**
