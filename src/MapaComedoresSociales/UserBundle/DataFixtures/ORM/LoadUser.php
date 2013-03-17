@@ -44,13 +44,10 @@ class LoadUser implements FixtureInterface, ContainerAwareInterface
             $user->setEnable((rand(1, 1000) % 10) < 6);
 
             // Password generation
-            $user->setSalt(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
-            $rawPassword = 'user'.$i;
-            $encoder = $this->container
-            			->get('security.encoder_factory')
-            			->getEncoder($user);
-            $encodePassword = $encoder->encodePassword($rawPassword, $user->getSalt());
-            $user->setPassword($encodePassword);
+            /** @var $userManager MapaComedoresSociales\UserBundle\Model\UserManager */
+            $userManager = $this->get('user_manager');
+            $user->setPlainPassword('user'.$i);
+            $userManager->updatePassword($user);
 
             // Auditory dates
             $user->setCreatedAt(new \DateTime('now - '.rand(1, 150).' days'));

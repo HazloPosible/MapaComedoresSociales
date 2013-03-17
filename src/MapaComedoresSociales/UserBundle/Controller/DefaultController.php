@@ -59,7 +59,8 @@ class DefaultController extends Controller
 			$form->bind($request);
 
 			if($form->isValid()) {
-
+                
+                /** @var $userManager MapaComedoresSociales\UserBundle\Model\UserManager */
 				$userManager = $this->get('user_manager');
 				$userManager->updatePassword($user);
 				$user->setEnabled(true);
@@ -82,11 +83,12 @@ class DefaultController extends Controller
     public function rememberPasswordAction() 
     {
         $request = $this->getRequest();
-
         $form = $this->createForm(new RememberPasswordType());
 
         if ($request->isMethod('POST')) {
-        	
+
+            $userManager = $this->get('user_manager');
+
         	$data = $form->bind($request)->getData();
 			$repository = $this->getDoctrine()->getRepository('UserBundle:User');
         	$user = $repository->findOneByEmail($data['email']);
@@ -120,6 +122,7 @@ class DefaultController extends Controller
         );
     }
 
+    // TODO:
     public function changePasswordAction() 
     {
         $user = $this->get('security.context')->getToken()->getUser();
@@ -128,21 +131,21 @@ class DefaultController extends Controller
     	}
 
     	$request = $this->getRequest();
-    	$form = $this->createForm(new ChangePasswordType());
+    	$form = $this->createForm(new ChangePasswordType(), $user);
 
     	if ($request->isMethod('POST')) {
 
-            $data = $form->bind($request)->getData();
-                
-   
-            
-            $user->setPassword($data['password']);
-            $userManager = $this->get('user_manager');
-            $userManager->updatePassword($user);
+            $form->bind($request);
 
-    		$em = $this->getDoctrine()->getEntityManager();
-    		$em->persist($user);
-    		$em->flush();
+            if ($form->isValid()) {
+
+                /** @var $userManager MapaComedoresSociales\UserBundle\Model\UserManager */
+                $userManager = $this->get('user_manager');
+                $userManager->updatePassword($user);
+                $userManager->persistUser($user);
+
+                return $this->redirect($this->generateUrl('_welcome'));
+            }
     	}
 
     	return $this->render(

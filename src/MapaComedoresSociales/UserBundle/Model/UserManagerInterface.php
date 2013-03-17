@@ -2,6 +2,7 @@
 
 namespace MapaComedoresSociales\UserBundle\Model;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
 * Interface to be implemented by user manager. This adds an addictional
@@ -39,6 +40,17 @@ interface UserManagerInterface
     public function deleteUser(UserInterface $user);
 
     /**
+     * Save an user instance in the database. 
+     * 
+     * @param UserInterface $user
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function persistUser(UserInterface $user);
+
+    /**
      * Find user according to some criteria
      * 
      * @param array $criteria.
@@ -68,28 +80,6 @@ interface UserManagerInterface
      * @return $users.
      */
     public function findUsers();
-
-    /**
-     * updateUserName
-     * 
-     * @param mixed \UserInterface Description.
-     *
-     * @access public
-     *
-     * @return mixed Value.
-     */
-    public function updateUserName(UserInterface $user);
-
-    /**
-     * Update user information
-     * 
-     * @param UserInterface $user.
-     *
-     * @access public
-     *
-     * @return void.
-     */
-    public function updateUser(UserInterface $user);
 
     /**
      * Reload user entity

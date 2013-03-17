@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 * @license  
 * @link     
 */
-class UserManager implements UserManagerInterface 
+class UserManager implements UserManagerInterface
 {
     protected $em;
     protected $encoderFactory;
@@ -44,6 +44,10 @@ class UserManager implements UserManagerInterface
         $this->userRepository = $em->getRepository('UserBundle:User');
     }
 
+    ///////////////////////
+    // UserManagerInterface
+    ///////////////////////
+
     /**
     * {@inheritDoc}
     */
@@ -57,15 +61,19 @@ class UserManager implements UserManagerInterface
     */
     public function deleteUser(UserInterface $user) 
     {
-        $user = $this->userRepository->find($id);
-
-        if (!$user) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $em->remove($user);
-        $em->flush();
+        $this->em->remove($user);
+        $this->em->flush();
     }
+
+    /**
+    * {@inheritDoc}
+    */
+    public function persistUser(UserInterface $user)
+    {
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
 
     /**
     * {@inheritDoc}
@@ -80,7 +88,7 @@ class UserManager implements UserManagerInterface
     */
     public function findUserByUsername($username) 
     {
-        return $this->userRepository->findUserByUsername;
+        return $this->userRepository->findUserByUsername($username);
     }
 
     /**
@@ -89,24 +97,6 @@ class UserManager implements UserManagerInterface
     public function findUsers() 
     {
         return $this->userRepository->findAll();
-    }
-
-
-    public function updateUserName(UserInterface $user);
-    {
-        
-    }
-
-    /**
-    * {@inheritDoc}
-    */
-    public function updateUser(UserInterface $user) 
-    {
-        $this->updateUserName($user));
-        $this->updatePassword($user)
-
-        $this->em->persist($user);
-        $this->em->flush();
     }
 
     /**
@@ -122,12 +112,21 @@ class UserManager implements UserManagerInterface
     */
     public function updatePassword(UserInterface $user) 
     {
-        $encoder = $this->encoderFactory->getEncoder($user);
-        $user->setSalt(hash($this->encoding, time() . $user->getPassword()));
-        $passwordCoding = $encoder->encodePassword(
-            $user->getPassword(),
-            $user->getSalt()
-        );
-        $user->setPassword($passwordCoding);
+        $password = $user->getPlainPassword();
+
+        if (strlen($password) !== 0) {
+
+            $encoder = $this->encoderFactory->getEncoder($user);
+            $user->setSalt(hash($this->encoding, time() . $password));        
+
+            $passwordCoding = $encoder->encodePassword(
+                $password,
+                $user->getSalt()
+            );
+
+            $user->setPassword($passwordCoding);
+            $user->eraseCredentials();
+
+        }
     }
 }

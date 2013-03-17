@@ -5,24 +5,31 @@ namespace MapaComedoresSociales\UserBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Security\Core\Validator\Constraint\UserPassword;
+use Symfony\Component\Security\Core\Validator\Constraint\UserPassword as OldUserPassword;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class ChangePasswordType extends AbstractType
 {
+    public function buildForm(FormBuilderInterface $builder, array $options) 
+    {
+        if (class_exists('Symfony\Component\Security\Core\Validator\Constraints\UserPassword')) {
+            $constraint = new UserPassword();
+        } else {
+            // Symfony 2.1 support with the old constraint class
+            $constraint = new OldUserPassword();
+        }
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
-        
         $builder->add('current_password', 'password', array(
             'label' => 'Current password',
             'mapped' => false,
-            'constraints' => new UserPassword(),
+            'constraints' => new OldUserPassword(),
         ));
         
-        $builder->add('plainPassword', 'repeated', array(
+        $builder->add('password', 'repeated', array(
             'type' => 'password',
             'first_options' => array('label' => 'New password'),
             'second_options' => array('label' => 'New password confirmation'),
-            'invalid_message' => 'fos_user.password.mismatch',
+            'invalid_message' => 'Error the passwords are different',
         ));
     }
 

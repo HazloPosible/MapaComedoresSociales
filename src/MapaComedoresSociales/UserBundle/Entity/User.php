@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\Exception\DisabledException;
 
 /**
  * MapaComedoresSociales\UserBundle\Entity\User
@@ -47,6 +48,13 @@ class User implements AdvancedUserInterface
     private $password;
 
     /**
+     * Plain password. Used for model validation. Must not be persisted.
+     *
+     * @var string
+     */
+    protected $plainPassword; 
+
+    /**
      * @var string $salt
      *
      * @ORM\Column(name="salt", type="string", length=255)
@@ -85,38 +93,70 @@ class User implements AdvancedUserInterface
     private $active;
 
     /**
-     * @var \DateTime $create_at
+     * @var \DateTime $createdAt
      *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timesta(on="create")
+     * @ORM\Column(name="createdAt", type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
-     * @var \DateTime $updated_at
+     * @var \DateTime $updatedAt
      *
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      */
-    private $updated_at;
+    private $updatedAt;    
 
     /**
-     * @var \DateTime $last_login_at
+     * @var \DateTime credentialsExpireAt
      *
-     * @ORM\Column(name="last_login_at", type="datetime", nullable=true)
+     * @ORM\Column(name="credentialsExpireAt", type="datetime", nullable=true)
      */
-    private $last_login_at;
+    private $credentialsExpireAt;
+
+    /**
+     * @var \DateTime $lastLoginAt
+     *
+     * @ORM\Column(name="lastLoginAt", type="datetime", nullable=true)
+     */
+    private $lastLoginAt;
+
+    /**
+     * Random string sent to the user email address in order to verify it
+     *
+     * @var string $confirmationToken
+     *
+     * @ORM\Column(name="confirmationToken", type="string", length=255)
+     */
+    private $confirmationToken;   
+
+    /**
+     * @var boolean $credentialsExpired
+     *
+     * @ORM\Column(name="credentialsExpired", type="boolean")
+     */
+    private $credentialsExpired;    
+
+    /**
+     * @var boolean $expired
+     *
+     * @ORM\Column(name="expired", type="boolean")
+     */
+    private $expired;
 
     /**
      * Constructor
      */
     public function __construct()
     {
+        //$this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->active = false;
-        $this->enabled = true;
-        //$this->salt = md5(uniqid(null, true));
+        $this->expired = false;
+        $this->enabled = false;
+        $this->credentialsExpired = false;
     }
 
     /**
@@ -127,7 +167,7 @@ class User implements AdvancedUserInterface
      */
     public function __toString()
     {
-        return $this->getName().', '.$this->getLastname();
+        return (string) $this->getName().', '.$this->getLastname();
     }
 
     /**
@@ -181,53 +221,109 @@ class User implements AdvancedUserInterface
     *  User Interfaces set up
     */
 
+    ////////////////
     // UserInterface
+    ////////////////
+
+    /**
+     * {@inheritDoc}
+     */
     public function getRoles()
     {
         return array('ROLE_USER');
     }
 
+    /**
+     * Gets the encrypted password.
+     * 
+     * @access public
+     *
+     * @return string.
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getSalt()
     {
         return $this->salt;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     function getUsername()
     {
         return $this->getEmail();
     }
 
+    /**
+     * Removes sensitive data from the user
+     * 
+     * @access public
+     *
+     * @return void.
+     */
     public function eraseCredentials()
     {
-
+        $this->plainPassword = null;
     }
 
+    ////////////////////////
     // AdvancedUserInterface
+    ////////////////////////
+    
+    /**
+     * {@inheritDoc}
+     */
     public function isAccountNonExpired()
-    {
+    {        
+        if ($this->expired === true) {
+            return false;
+        }
+
+        if ($this->expiresAt && $this->expiresAt->getTimestamp() < time() !== null) {
+            return false;
+        }
+        
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isAccountNonLocked()
     {
-        return true;
+        return $this->actived;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isCredentialsNonExpired()
     {
-        return true;
+        return !$this->isCredentialsNonExpired();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isEnabled()
     {
+        if (!$this->active) {
+
+            throw new DisabledException('Account is disabled');
+        }
         return $this->active;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isEqualTo(UserInterface $user)
     {
         return $this->email === $user->getUsername();
@@ -390,7 +486,7 @@ class User implements AdvancedUserInterface
      */
     public function setEnabled($enabled)
     {
-        $this->enabled = $enabled;
+        $this->enabled = (Boolean) $enabled;
 
         return $this;
     }
@@ -413,7 +509,7 @@ class User implements AdvancedUserInterface
      */
     public function setActive($active)
     {
-        $this->active = $active;
+        $this->active = (Boolean) $active;
 
         return $this;
     }
@@ -429,73 +525,167 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set created_at
-     *
+     * Set createdAt
      * @param \DateTime $createdAt
      * @return User
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get created_at
-     *
+     * Get createdAt
      * @return \DateTime
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * Set updated_at
+     * Set updatedAt
      *
      * @param \DateTime $updatedAt
      * @return User
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get updated_at
+     * Get updatedAt
      *
      * @return \DateTime
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * Set last_login_at
+     * Get Credentials Expire At
+     * 
+     * @access public
+     *
+     * @return \DateTime.
+     */
+    public function getcredentialsExpireAt()
+    {
+        return $this->getcredentialsExpireAt;
+    }
+
+    /**
+     * Set Credentials Expire At
+     * 
+     * @access public
+     *
+     * @return \DateTime.
+     */
+    public function setcredentialsExpireAt($credentialsExpireAt)
+    {
+        return $this->getcredentialsExpireAt = $credentialsExpireAt;
+    }
+
+    /**
+     * Get lastLoginAt
+     *
+     * @return \DateTime
+     */
+    public function getLastLoginAt()
+    {
+        return $this->lastLoginAt;
+    }
+
+    /**
+     * Set lastLoginAt
      *
      * @param \DateTime $lastLoginAt
      * @return User
      */
     public function setLastLoginAt($lastLoginAt)
     {
-        $this->last_login_at = $lastLoginAt;
+        $this->lastLoginAt = $lastLoginAt;
 
         return $this;
     }
 
     /**
-     * Get last_login_at
-     *
-     * @return \DateTime
+     * Get ConfirmationToken
+     * 
+     * @access public
+     * @return string.
      */
-    public function getLastLoginAt()
+    public function getConfirmationToken()
     {
-        return $this->last_login_at;
+        return $this->confirmationToken;
     }
+
+    /**
+     * Set ConfirmationToken
+     * 
+     * @param string $confirmationToken.
+     *
+     * @access public
+     * @return string.
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        return $this->confirmationToken = $confirmationToken;
+    }  
+
+    /**
+     * Get ConfirmationToken
+     * 
+     * @access public
+     * @return boolean.
+     */
+    public function getCredentialsExpired()
+    {
+        return $this->credentialsExpired;
+    }
+
+    /**
+     * Set credentialsExpired
+     * 
+     * @param boolean $credentialsExpired.
+     *
+     * @access public
+     * @return boolean.
+     */
+    public function setCredentialsExpired($credentialsExpired)
+    {
+        return $this->credentialsExpired = (Boolean) $credentialsExpired;
+    }  
+
+    /**
+     * Get expired
+     * 
+     * @access public
+     * @return boolean.
+     */
+    public function getExpired()
+    {
+        return $this->expired;
+    }
+
+    /**
+     * Set expired
+     * 
+     * @param boolean $expired.
+     *
+     * @access public
+     * @return boolean.
+     */
+    public function setExpired($expired)
+    {
+        return $this->expired = (Boolean) $expired;
+    } 
 
     /**
      * Get pantries
@@ -515,5 +705,29 @@ class User implements AdvancedUserInterface
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set plain password
+     * 
+     * @param mixed $password Description.
+     *
+     * @access public
+     * @return String.
+     */
+    public function setPlainPassword($password) 
+    {   
+        return $this->plainPassword = $password;
+    }
+
+    /**
+     * Get Plain Password
+     * 
+     * @access public
+     * @return String.
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
     }
 }
