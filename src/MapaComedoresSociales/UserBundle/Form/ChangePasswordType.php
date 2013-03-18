@@ -22,10 +22,10 @@ class ChangePasswordType extends AbstractType
         $builder->add('current_password', 'password', array(
             'label' => 'Current password',
             'mapped' => false,
-            'constraints' => new OldUserPassword(),
+            'constraints' => $constraint,
         ));
         
-        $builder->add('password', 'repeated', array(
+        $builder->add('plainPassword', 'repeated', array(
             'type' => 'password',
             'first_options' => array('label' => 'New password'),
             'second_options' => array('label' => 'New password confirmation'),

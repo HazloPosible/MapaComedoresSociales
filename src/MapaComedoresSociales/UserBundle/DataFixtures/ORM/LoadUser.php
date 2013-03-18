@@ -52,6 +52,9 @@ class LoadUser implements FixtureInterface, ContainerAwareInterface
             // Auditory dates
             $user->setCreatedAt(new \DateTime('now - '.rand(1, 150).' days'));
 
+            // Expire date
+            $user->expiresAt();
+
             $manager->persist($user);
         }
 

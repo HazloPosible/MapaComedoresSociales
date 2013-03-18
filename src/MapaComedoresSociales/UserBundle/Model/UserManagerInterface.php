@@ -48,7 +48,7 @@ interface UserManagerInterface
      *
      * @return void
      */
-    public function persistUser(UserInterface $user);
+    public function persist(UserInterface $user);
 
     /**
      * Find user according to some criteria

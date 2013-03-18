@@ -47,6 +47,7 @@ class DefaultController extends Controller
 		);
 	}
 
+    // TODO: Refactor and add suport for expired dates
 	public function registerAction() 
     {
 		$request = $this->getRequest();
@@ -63,11 +64,13 @@ class DefaultController extends Controller
                 /** @var $userManager MapaComedoresSociales\UserBundle\Model\UserManager */
 				$userManager = $this->get('user_manager');
 				$userManager->updatePassword($user);
-				$user->setEnabled(true);
+				
+                // TODO: Generate an send email confirmation
+                $user->setEnabled(true);
 
-				$em = $this->getDoctrine()->getEntityManager();
-				$em->persist($user);
-				$em->flush();
+				$userManager->persist($user);
+
+                $this->get('session')->getFlashBag()->add('success', 'Your user has created successfully!. As Soon as you will recive a email confirmation');
 
 				return $this->redirect($this->generateUrl('user'));
 			}
@@ -122,12 +125,11 @@ class DefaultController extends Controller
         );
     }
 
-    // TODO:
     public function changePasswordAction() 
     {
         $user = $this->get('security.context')->getToken()->getUser();
     	if (!is_object($user) || !$user instanceof User) {
-    		throw new AccessDeniedException('Este usuario no tiene permisos de acceso a esta sección');
+    		throw new AccessDeniedException('This user does not have access to this section.p');
     	}
 
     	$request = $this->getRequest();
@@ -142,7 +144,9 @@ class DefaultController extends Controller
                 /** @var $userManager MapaComedoresSociales\UserBundle\Model\UserManager */
                 $userManager = $this->get('user_manager');
                 $userManager->updatePassword($user);
-                $userManager->persistUser($user);
+                $userManager->persist($user);
+
+                $this->get('session')->getFlashBag()->add('success', 'Your password has changed successfully!');
 
                 return $this->redirect($this->generateUrl('_welcome'));
             }

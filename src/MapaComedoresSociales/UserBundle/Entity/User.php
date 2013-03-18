@@ -52,7 +52,7 @@ class User implements AdvancedUserInterface
      *
      * @var string
      */
-    protected $plainPassword; 
+    private $plainPassword; 
 
     /**
      * @var string $salt
@@ -95,7 +95,7 @@ class User implements AdvancedUserInterface
     /**
      * @var \DateTime $createdAt
      *
-     * @Gedmo\Timesta(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
@@ -146,11 +146,17 @@ class User implements AdvancedUserInterface
     private $expired;
 
     /**
+     * @var \DateTime expiresAt
+     *
+     * @ORM\Column(name="expiresAt", type="datetime", nullable=true)
+     */
+    private $expiresAt;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        //$this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->active = false;
@@ -298,13 +304,26 @@ class User implements AdvancedUserInterface
      */
     public function isAccountNonLocked()
     {
-        return $this->actived;
+        return $this->active;
     }
 
     /**
      * {@inheritDoc}
      */
     public function isCredentialsNonExpired()
+    {
+        if (true === $this->credentialsExpired) {
+            return false;
+        }
+
+        if (null !== $this->credentialsExpireAt && $this->credentialsExpireAt->getTimestamp() < time()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isCredentialsExpired()
     {
         return !$this->isCredentialsNonExpired();
     }
@@ -686,6 +705,18 @@ class User implements AdvancedUserInterface
     {
         return $this->expired = (Boolean) $expired;
     } 
+
+    /**
+     * @param \DateTime $date
+     *
+     * @return User
+     */
+    public function setExpiresAt(\DateTime $date = null)
+    {
+        $this->expiresAt = $date;
+
+        return $this;
+    }
 
     /**
      * Get pantries

@@ -68,7 +68,7 @@ class UserManager implements UserManagerInterface
     /**
     * {@inheritDoc}
     */
-    public function persistUser(UserInterface $user)
+    public function persist(UserInterface $user)
     {
         $this->em->persist($user);
         $this->em->flush();
@@ -126,7 +126,6 @@ class UserManager implements UserManagerInterface
 
             $user->setPassword($passwordCoding);
             $user->eraseCredentials();
-
         }
     }
 }
