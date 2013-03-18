@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\Exception\DisabledException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MapaComedoresSociales\UserBundle\Entity\User
@@ -29,14 +30,20 @@ class User implements AdvancedUserInterface
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)     
+     *
+     * @Assert\NotBlank()
+     * @Assert\MaxLength(255)
      */
     private $name;
 
     /**
      * @var string $lastname
      *
-     * @ORM\Column(name="lastname", type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=255)     
+     *
+     * @Assert\NotBlank()
+     * @Assert\MaxLength(255)
      */
     private $lastname;
 
@@ -64,7 +71,13 @@ class User implements AdvancedUserInterface
     /**
      * @var string $email
      *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)    
+     *
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     checkMX = true,
+     *     checkHost = true
+     * )
      */
     private $email;
 
