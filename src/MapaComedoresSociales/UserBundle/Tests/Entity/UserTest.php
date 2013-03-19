@@ -4,6 +4,7 @@ namespace MapaComedoresSociales\UserBundle\Tests\Entity;
 
 use Symfony\Component\Validator\Validation;
 use MapaComedoresSociales\UserBundle\Entity\User;
+use MapaComedoresSociales\PantryBundle\Entity\Pantry;
 
 /**
 * User Test 
@@ -23,6 +24,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 			->enableAnnotationMapping()
 			->getValidator();
 	}
+
+	// name
 
 	public function testName()
 	{
@@ -64,6 +67,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('name', $error->getPropertyPath());
 	}
 
+	// lastName
+
 	public function testLastname()
 	{
 		$user = New User();
@@ -104,6 +109,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 		$this->assertRegExp("/This value is too long/", $error->getMessage());
 		$this->assertEquals('lastname', $error->getPropertyPath());
 	}
+
+	// Email
 
 	public function testEmail()
 	{
@@ -151,6 +158,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('email', $error->getPropertyPath());
 	}
 
+	// UserName
 	public function testUserName()
 	{
 		$user = New User();
@@ -159,5 +167,106 @@ class UserTest extends \PHPUnit_Framework_TestCase
 		$user->setEmail('mgonyan@gmail.com');
 		$this->assertEquals('mgonyan@gmail.com', $user->getUsername());
 	}
+
+	// password
+	// plainPassword
+	// salt
+
+	public function testSalt()
+	{
+		$user = New User();
+		$this->assertNull($user->getUsername());
+
+		$user->setSalt('asdeeeqqwe2465');
+		$salt = $user->getSalt();
+
+		$this->assertEquals('asdeeeqqwe2465', $salt);
+	}
+
+	// pantries
+
+	public function testPantries()
+	{
+
+	}
+
+	// comments
+
+	public function credentialsExpireAt()
+	{
+		
+	}	
+
+	// enabled
+
+	public function testEnabled() 
+	{
+		$user = New User();
+		$this->assertFalse($user->getEnabled());
+
+		$user->setEnabled(true);
+		$this->assertEquals(true, $user->getEnabled());
+	}
+
+	// active
+
+	public function testActive() 
+	{
+		$user = New User();
+		$this->assertFalse($user->getActive());
+
+		$user->setActive(false);
+		$this->assertEquals(false, $user->getActive());
+	}
+
+	// createdAt
+
+	public function createdAt()
+	{
+
+	}
+
+	// updatedAt
+
+	public function updatedAt()
+	{
+
+	}
+
+	// credentialsExpireAt
+
+	public function credentialsExpireAt()
+	{
+
+	}	
+
+	// lastLoginAt
+
+	public function credentialsExpireAt()
+	{
+		
+	}	
+
+	// confirmationToken
+
+	public function credentialsExpireAt()
+	{
+		
+	}	
+
+	// expired
+
+	public function credentialsExpireAt()
+	{
+		
+	}	
+
+	// expiresAt
+
+	public function credentialsExpireAt()
+	{
+		
+	}	
+
 
 }
