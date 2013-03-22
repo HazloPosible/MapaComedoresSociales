@@ -17,15 +17,15 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
     {
         $menu = $this->createNavbarMenuItem();
         if ($this->securityContext->isGranted('ROLE_USER')) {
-            
+
             $menu->addChild('Añade un comedor', array('route' => 'pantry_new'));
-            $menu->addChild('Salir', array('route' => 'user_logout'));
+            $menu->addChild('Salir', array('route' => 'fos_user_security_logout'));
 
         } else {
-            $menu->addChild('Login', array('route' => 'user_login'));
-            $menu->addChild('Registro', array('route' => 'user_register'));    
+            $menu->addChild('Login', array('route' => 'fos_user_security_login'));
+            $menu->addChild('Registro', array('route' => 'fos_user_registration_register'));
         }
-        
+
         return $menu;
     }
 

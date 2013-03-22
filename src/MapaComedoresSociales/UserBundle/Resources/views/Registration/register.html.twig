@@ -1,0 +1,7 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+{% block headline %}Registro de usuario{% endblock headline %}
+
+{% block fos_user_content %}
+    {% include "UserBundle:Registration:register_content.html.twig" %}
+{% endblock fos_user_content %}

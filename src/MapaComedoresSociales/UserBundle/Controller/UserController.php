@@ -51,45 +51,6 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to create a new User entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new User();
-        $form   = $this->createForm(new UserType(), $entity);
-        die('really?');
-        return $this->render('UserBundle:User:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Creates a new User entity.
-     *
-     */
-    public function createAction(Request $request)
-    {
-        $entity  = new User();
-        $form = $this->createForm(new UserType(), $entity);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('UserBundle:User:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
      * Displays a form to edit an existing User entity.
      *
      */

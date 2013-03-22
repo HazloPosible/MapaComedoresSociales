@@ -15,8 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 * @package  Package
 * @author   Manuel A. Gonzalez Yanes <mgonyan@gmail.com>
 * @author   Sergio Moya Campaña <smoya69@gmail.com>
-* @license  
-* @link     
+* @license
+* @link
 */
 class UserManager implements UserManagerInterface
 {
@@ -27,7 +27,7 @@ class UserManager implements UserManagerInterface
 
     /**
      * Constructor.
-     * 
+     *
      * @param EntityManager             $em entity manager object at Doctrine.
      * @param EncoderFactoryInterface   $encoderFactory type of encoder for password.
      * @param string                    $encoding string with type of content.
@@ -36,8 +36,8 @@ class UserManager implements UserManagerInterface
      *
      * @return void.
      */
-    public function __construct(EntityManager $em, EncoderFactoryInterface $encoderFactory, $encoding) 
-    {    
+    public function __construct(EntityManager $em, EncoderFactoryInterface $encoderFactory, $encoding)
+    {
         $this->em = $em;
         $this->encoderFactory = $encoderFactory;
         $this->encoding = $encoding;
@@ -51,7 +51,7 @@ class UserManager implements UserManagerInterface
     /**
     * {@inheritDoc}
     */
-    public function createUser() 
+    public function createUser()
     {
         return $this->userRepository;
     }
@@ -59,7 +59,7 @@ class UserManager implements UserManagerInterface
     /**
     * {@inheritDoc}
     */
-    public function deleteUser(UserInterface $user) 
+    public function deleteUser(UserInterface $user)
     {
         $this->em->remove($user);
         $this->em->flush();
@@ -74,11 +74,10 @@ class UserManager implements UserManagerInterface
         $this->em->flush();
     }
 
-
     /**
     * {@inheritDoc}
     */
-    public function findUserBy(array $criteria) 
+    public function findUserBy(array $criteria)
     {
         return $this->userRepository->findUserBy($criteria);
     }
@@ -86,7 +85,7 @@ class UserManager implements UserManagerInterface
     /**
     * {@inheritDoc}
     */
-    public function findUserByUsername($username) 
+    public function findUserByUsername($username)
     {
         return $this->userRepository->findUserByUsername($username);
     }
@@ -94,7 +93,7 @@ class UserManager implements UserManagerInterface
     /**
     * {@inheritDoc}
     */
-    public function findUsers() 
+    public function findUsers()
     {
         return $this->userRepository->findAll();
     }
@@ -107,25 +106,4 @@ class UserManager implements UserManagerInterface
         $this->em->refresh($user);
     }
 
-    /**
-    * {@inheritDoc}
-    */
-    public function updatePassword(UserInterface $user) 
-    {
-        $password = $user->getPlainPassword();
-
-        if (strlen($password) !== 0) {
-
-            $encoder = $this->encoderFactory->getEncoder($user);
-            $user->setSalt(hash($this->encoding, time() . $password));        
-
-            $passwordCoding = $encoder->encodePassword(
-                $password,
-                $user->getSalt()
-            );
-
-            $user->setPassword($passwordCoding);
-            $user->eraseCredentials();
-        }
-    }
 }

@@ -8,20 +8,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
 * Interface to be implemented by user manager. This adds an addictional
 * level of abstracion between.
 *
-* @uses     
+* @uses
 *
 * @category Category
 * @package  Package
 * @author   Manuel A. Gonzalez Yanes <mgonyan@gmail.com>
 * @author   Sergio Moya Campaña <smoya69@gmail.com>
-* @license  
-* @link     
+* @license
+* @link
 */
-interface UserManagerInterface 
+interface UserManagerInterface
 {
     /**
      * Return an empty user.
-     * 
+     *
      * @access public
      *
      * @return UserInterface
@@ -29,8 +29,8 @@ interface UserManagerInterface
     public function createUser();
 
     /**
-     * Delete an user instance. 
-     * 
+     * Delete an user instance.
+     *
      * @param UserInterface $user
      *
      * @access public
@@ -40,8 +40,8 @@ interface UserManagerInterface
     public function deleteUser(UserInterface $user);
 
     /**
-     * Save an user instance in the database. 
-     * 
+     * Save an user instance in the database.
+     *
      * @param UserInterface $user
      *
      * @access public
@@ -52,7 +52,7 @@ interface UserManagerInterface
 
     /**
      * Find user according to some criteria
-     * 
+     *
      * @param array $criteria.
      *
      * @access public
@@ -63,7 +63,7 @@ interface UserManagerInterface
 
     /**
      * Find user by Username
-     * 
+     *
      * @param string $username.
      *
      * @access public
@@ -74,7 +74,7 @@ interface UserManagerInterface
 
     /**
      * Find all user
-     * 
+     *
      * @access public
      *
      * @return $users.
@@ -83,7 +83,7 @@ interface UserManagerInterface
 
     /**
      * Reload user entity
-     * 
+     *
      * @param UserInterface $user.
      *
      * @access public
@@ -92,16 +92,6 @@ interface UserManagerInterface
      */
     public function reloadUser(UserInterface $user);
 
-    /**
-     * Updates a user password if a plain password is set
-     * 
-     * @param UserInterface $user.
-     *
-     * @access public
-     *
-     * @return void
-     */
-    public function updatePassword(UserInterface $user);
 }
 
 

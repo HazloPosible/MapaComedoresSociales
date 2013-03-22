@@ -1,0 +1,13 @@
+
+{% block fos_user_content %}
+     <form class= "form-horizontal" action="{{ path('fos_user_registration_register') }}" method="post" {{form_enctype(form) }}>
+
+      {{ form_errors(form )}}
+
+      <fieldset>
+         <legend>Datos de usuario</legend>
+         {{ form_rest(form) }}
+      </fieldset>
+      <input class="btn btn-primary" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+   </form>
+{% endblock fos_user_content %}

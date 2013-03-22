@@ -2,35 +2,28 @@
 
 namespace MapaComedoresSociales\UserBundle\Entity;
 
+use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * MapaComedoresSociales\UserBundle\Entity\User
- *
- * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Table()
  */
-class User implements AdvancedUserInterface
+class User extends BaseUser
 {
     /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="string", length=255)     
+     * @ORM\Column(name="name", type="string", length=255)
      *
      * @Assert\NotBlank()
      * @Assert\MaxLength(255)
@@ -40,7 +33,7 @@ class User implements AdvancedUserInterface
     /**
      * @var string $lastname
      *
-     * @ORM\Column(name="lastname", type="string", length=255)     
+     * @ORM\Column(name="lastname", type="string", length=255)
      *
      * @Assert\NotBlank()
      * @Assert\MaxLength(255)
@@ -48,68 +41,10 @@ class User implements AdvancedUserInterface
     private $lastname;
 
     /**
-     * @var string $password
-     *
-     * @ORM\Column(name="password", type="string", length=255)
-     */
-    private $password;
-
-    /**
-     * Plain password. Used for model validation. Must not be persisted.
-     *
-     * @var string
-     */
-    private $plainPassword; 
-
-    /**
-     * @var string $salt
-     *
-     * @ORM\Column(name="salt", type="string", length=255)
-     */
-    private $salt;
-
-    /**
-     * @var string $email
-     *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)    
-     *
-     * @Assert\NotBlank()
-     * @Assert\Email(
-     *     checkMX = true,
-     *     checkHost = true
-     * )
-     */
-    private $email;
-
-    /**
-     * @ORM\OneToMany(targetEntity="MapaComedoresSociales\PantryBundle\Entity\Pantry", mappedBy="user")
-     **/
-    private $pantries;
-
-    /**
-     * @ORM\OneToMany(targetEntity="MapaComedoresSociales\CommentBundle\Entity\Comment", mappedBy="user")
-     **/
-    private $comments;
-
-    /**
-     * @var boolean $enabled
-     *
-     * @ORM\Column(name="enabled", type="boolean")
-     */
-    private $enabled;
-
-    /**
-     * @var boolean $active
-     *
-     * @ORM\Column(name="active", type="boolean")
-     */
-    private $active;
-
-    /**
      * @var \DateTime $createdAt
      *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
@@ -117,302 +52,25 @@ class User implements AdvancedUserInterface
      * @var \DateTime $updatedAt
      *
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private $updatedAt;    
+    private $updatedAt;
 
     /**
-     * @var \DateTime credentialsExpireAt
-     *
-     * @ORM\Column(name="credentialsExpireAt", type="datetime", nullable=true)
+     * @ORM\OneToMany(targetEntity="MapaComedoresSociales\PantryBundle\Entity\Pantry", mappedBy="user")
      */
-    private $credentialsExpireAt;
+    private $pantries;
 
     /**
-     * @var \DateTime $lastLoginAt
-     *
-     * @ORM\Column(name="lastLoginAt", type="datetime", nullable=true)
+     * @ORM\OneToMany(targetEntity="MapaComedoresSociales\CommentBundle\Entity\Comment", mappedBy="user")
      */
-    private $lastLoginAt;
+    private $comments;
 
-    /**
-     * Random string sent to the user email address in order to verify it
-     *
-     * @var string $confirmationToken
-     *
-     * @ORM\Column(name="confirmationToken", type="string", length=255)
-     */
-    private $confirmationToken;   
-
-    /**
-     * @var boolean $credentialsExpired
-     *
-     * @ORM\Column(name="credentialsExpired", type="boolean")
-     */
-    private $credentialsExpired;    
-
-    /**
-     * @var boolean $expired
-     *
-     * @ORM\Column(name="expired", type="boolean")
-     */
-    private $expired;
-
-    /**
-     * @var \DateTime expiresAt
-     *
-     * @ORM\Column(name="expiresAt", type="datetime", nullable=true)
-     */
-    private $expiresAt;
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
+        parent::__construct();
         $this->pantries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->active = false;
-        $this->expired = false;
-        $this->enabled = false;
-        $this->credentialsExpired = false;
-    }
-
-    /**
-     * Return name + lastname for relationships
-     *
-     * @param void
-     * @return String
-     */
-    public function __toString()
-    {
-        return (string) $this->getName().', '.$this->getLastname();
-    }
-
-    /**
-     * Add pantries
-     *
-     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
-     * @return User
-     */
-    public function addPantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
-    {
-        $this->pantries[] = $pantries;
-
-        return $this;
-    }
-
-    /**
-     * Remove pantries
-     *
-     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
-     */
-    public function removePantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
-    {
-        $this->pantries->removeElement($pantries);
-    }
-
-    /**
-     * Add comments
-     *
-     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
-     * @return User
-     */
-    public function addComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
-    {
-        $this->comments[] = $comments;
-
-        return $this;
-    }
-
-    /**
-     * Remove comments
-     *
-     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
-     */
-    public function removeComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
-    {
-        $this->comments->removeElement($comments);
-    }
-
-    /**
-    *
-    *  User Interfaces set up
-    */
-
-    ////////////////
-    // UserInterface
-    ////////////////
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-    /**
-     * Gets the encrypted password.
-     * 
-     * @access public
-     *
-     * @return string.
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    function getUsername()
-    {
-        return $this->getEmail();
-    }
-
-    /**
-     * Removes sensitive data from the user
-     * 
-     * @access public
-     *
-     * @return void.
-     */
-    public function eraseCredentials()
-    {
-        $this->plainPassword = null;
-    }
-
-    ////////////////////////
-    // AdvancedUserInterface
-    ////////////////////////
-    
-    /**
-     * {@inheritDoc}
-     */
-    public function isAccountNonExpired()
-    {        
-        if ($this->expired === true) {
-            return false;
-        }
-
-        if ($this->expiresAt && $this->expiresAt->getTimestamp() < time() !== null) {
-            return false;
-        }
-        
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isAccountNonLocked()
-    {
-        return $this->active;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isCredentialsNonExpired()
-    {
-        if (true === $this->credentialsExpired) {
-            return false;
-        }
-
-        if (null !== $this->credentialsExpireAt && $this->credentialsExpireAt->getTimestamp() < time()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function isCredentialsExpired()
-    {
-        return !$this->isCredentialsNonExpired();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isEnabled()
-    {
-        if (!$this->active) {
-
-            throw new DisabledException('Account is disabled');
-        }
-        return $this->active;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isEqualTo(UserInterface $user)
-    {
-        return $this->email === $user->getUsername();
-    }
-
-    /**
-     * @see \Serializable::serialize()
-     */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-        ));
-    }
-
-    /**
-     * @see \Serializable::unserialize()
-     */
-    public function unserialize($serialized)
-    {
-        list ($this->id,
-        ) = unserialize($serialized);
-    }
-
-    /**
-     * Get isAactive
-     *
-     * @return boolean
-     */
-    public function isActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Get isEnable
-     *
-     * @return boolean
-     */
-    public function isEnable()
-    {
-        return $this->enable;
-    }
-
-    /*================================
-    *      GENERATED
-    *=================================
-    */
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -462,101 +120,6 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set password
-     *
-     * @param string $password
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     * @return User
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set enable
-     *
-     * @param boolean $enable
-     * @return User
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = (Boolean) $enabled;
-
-        return $this;
-    }
-
-    /**
-     * Get enable
-     *
-     * @return boolean
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * Set isAactive
-     *
-     * @param boolean $isAactive
-     * @return User
-     */
-    public function setActive($active)
-    {
-        $this->active = (Boolean) $active;
-
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
      * Set createdAt
      * @param \DateTime $createdAt
      * @return User
@@ -601,137 +164,6 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Get Credentials Expire At
-     * 
-     * @access public
-     *
-     * @return \DateTime.
-     */
-    public function getcredentialsExpireAt()
-    {
-        return $this->getcredentialsExpireAt;
-    }
-
-    /**
-     * Set Credentials Expire At
-     * 
-     * @access public
-     *
-     * @return \DateTime.
-     */
-    public function setcredentialsExpireAt($credentialsExpireAt)
-    {
-        return $this->getcredentialsExpireAt = $credentialsExpireAt;
-    }
-
-    /**
-     * Get lastLoginAt
-     *
-     * @return \DateTime
-     */
-    public function getLastLoginAt()
-    {
-        return $this->lastLoginAt;
-    }
-
-    /**
-     * Set lastLoginAt
-     *
-     * @param \DateTime $lastLoginAt
-     * @return User
-     */
-    public function setLastLoginAt($lastLoginAt)
-    {
-        $this->lastLoginAt = $lastLoginAt;
-
-        return $this;
-    }
-
-    /**
-     * Get ConfirmationToken
-     * 
-     * @access public
-     * @return string.
-     */
-    public function getConfirmationToken()
-    {
-        return $this->confirmationToken;
-    }
-
-    /**
-     * Set ConfirmationToken
-     * 
-     * @param string $confirmationToken.
-     *
-     * @access public
-     * @return string.
-     */
-    public function setConfirmationToken($confirmationToken)
-    {
-        return $this->confirmationToken = $confirmationToken;
-    }  
-
-    /**
-     * Get ConfirmationToken
-     * 
-     * @access public
-     * @return boolean.
-     */
-    public function getCredentialsExpired()
-    {
-        return $this->credentialsExpired;
-    }
-
-    /**
-     * Set credentialsExpired
-     * 
-     * @param boolean $credentialsExpired.
-     *
-     * @access public
-     * @return boolean.
-     */
-    public function setCredentialsExpired($credentialsExpired)
-    {
-        return $this->credentialsExpired = (Boolean) $credentialsExpired;
-    }  
-
-    /**
-     * Get expired
-     * 
-     * @access public
-     * @return boolean.
-     */
-    public function getExpired()
-    {
-        return $this->expired;
-    }
-
-    /**
-     * Set expired
-     * 
-     * @param boolean $expired.
-     *
-     * @access public
-     * @return boolean.
-     */
-    public function setExpired($expired)
-    {
-        return $this->expired = (Boolean) $expired;
-    } 
-
-    /**
-     * @param \DateTime $date
-     *
-     * @return User
-     */
-    public function setExpiresAt(\DateTime $date = null)
-    {
-        $this->expiresAt = $date;
-
-        return $this;
-    }
-
-    /**
      * Get pantries
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -752,26 +184,48 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set plain password
-     * 
-     * @param mixed $password Description.
+     * Add pantries
      *
-     * @access public
-     * @return String.
+     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
+     * @return User
      */
-    public function setPlainPassword($password) 
-    {   
-        return $this->plainPassword = $password;
+    public function addPantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
+    {
+        $this->pantries[] = $pantries;
+
+        return $this;
     }
 
     /**
-     * Get Plain Password
-     * 
-     * @access public
-     * @return String.
+     * Remove pantries
+     *
+     * @param \MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries
      */
-    public function getPlainPassword()
+    public function removePantries(\MapaComedoresSociales\PantryBundle\Entity\Pantry $pantries)
     {
-        return $this->plainPassword;
+        $this->pantries->removeElement($pantries);
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
+     * @return User
+     */
+    public function addComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \MapaComedoresSociales\CommentBundle\Entity\Comment $comments
+     */
+    public function removeComment(\MapaComedoresSociales\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
     }
 }

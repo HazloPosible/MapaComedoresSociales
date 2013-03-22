@@ -5,7 +5,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -33,7 +33,7 @@ assetic:
     filters:
         cssrewrite: ~
         less:
-            node: /usr/bin/node
+            node: /usr/bin/nodejs
             node_paths: [/usr/local/lib/node_modules]
             #node: %assetic_node%
             #node_paths: [%assetic_less_path%]
@@ -71,7 +71,6 @@ swiftmailer:
 mopa_bootstrap:
     navbar: ~
 
-
 # Doctrine Extensions Configuration
 stof_doctrine_extensions:
         default_locale: es_ES
@@ -80,6 +79,27 @@ stof_doctrine_extensions:
             default:
               timestampable: true
               tree: true
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: MapaComedoresSociales\UserBundle\Entity\User
+    registration:
+        form:
+            type: mapacomedoressociales_userbundle_registrationformtype
+        confirmation:
+            enabled:    true
+            from_email:
+                address:        registro@comedoressociales.org
+                sender_name:    Registro en ComedoresSociales.org
+    resetting:
+        email:
+            from_email:
+                address:        resetting@comedoressociales.org
+                sender_name:    Reseteo de password en ComedoresSociales.org
+    from_email:
+        address:        noreply@comedoressociales.org
+        sender_name:    ComedoresSociales.org
 
 # Ivory google Map Pluggins
 ivory_google_map:

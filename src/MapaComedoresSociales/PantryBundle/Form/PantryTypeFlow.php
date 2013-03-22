@@ -45,7 +45,7 @@ class PantryTypeFlow extends FormFlow implements EventSubscriberInterface
             $result = current($geocoder->geocode(sprintf('%s %s', $data->getAddress(), $data->getZip()))->getResults());
             $location = $result->getGeometry()->getLocation();
         } catch (\Exception $e) {
-            $result = current($geocoder->geocode(sprintf('%s %s', $data->getAddress()))->getResults());
+            $result = current($geocoder->geocode(sprintf('%s', $data->getAddress()))->getResults());
             $location = $result->getGeometry()->getLocation();
         } catch (\Exception $e) {
             // log?

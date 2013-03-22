@@ -1,4 +1,10 @@
 services:
+    mapacomedoressociales.userbundle.registration.form.type:
+        class: MapaComedoresSociales\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: mapacomedoressociales_userbundle_registrationformtype }
+            
     user_manager: 
         class: MapaComedoresSociales\UserBundle\Model\UserManager
         arguments: [ @doctrine.orm.entity_manager, @security.encoder_factory, %security_encoding% ]
