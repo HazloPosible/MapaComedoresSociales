@@ -15,7 +15,7 @@
               Añadir comedor
             </div>
           </h4>
-          <form class= "form-vertical" action="{{ path('pantry_create') }}" method="post" {{form_enctype(pantryForm)}}>
+          <form class= "form-vertical" action="{{ path('pantry_new') }}" method="post" {{form_enctype(pantryForm)}}>
               {{ form_errors(pantryForm )}}
               <fieldset>
                  {{ form_rest(pantryForm) }}
