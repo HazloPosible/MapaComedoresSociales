@@ -2,11 +2,11 @@ parameters:
     mapacomedoressociales.map.populate.repository_class: 'MapaComedoresSociales\PantryBundle\Entity\Pantry'
 
 services:
-    mapacomedoressociales.form.type.pantry_type: 
+    mapacomedoressociales.form.type.pantry_type:
         class: MapaComedoresSociales\PantryBundle\Form\PantryType
         tags:
             - { name: form.type, alias: pantryType }
-    
+
     mapacomedoressociales.form.flow.pantry_type_flow:
         class: MapaComedoresSociales\PantryBundle\Form\PantryTypeFlow
         parent: craue.form.flow
@@ -15,13 +15,12 @@ services:
             - [ setFormType, [ @mapacomedoressociales.form.type.pantry_type ] ]
             - [ setGeocoder, [ @ivory_google_map.geocoder= ] ]
 
-    mapacomedoressociales.manager.map: 
+    mapacomedoressociales.manager.map:
         class: MapaComedoresSociales\PantryBundle\Model\MapManager
         scope: prototype
-        arguments: 
+        arguments:
             - @doctrine.orm.entity_manager
             - @ivory_google_map.map
-            - @ivory_google_map.marker
             - @ivory_google_map.pan_control
             - @ivory_google_map.map_type_control
             - %mapacomedoressociales.map.populate.repository_class%

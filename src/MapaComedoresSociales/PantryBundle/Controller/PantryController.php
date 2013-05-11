@@ -91,6 +91,7 @@ class PantryController extends Controller
                 $form = $flow->createForm($entity);
             } else {
                 // flow finished
+                $form = $flow->createForm($entity);
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entity);
                 $em->flush();

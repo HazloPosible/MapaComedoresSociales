@@ -22,8 +22,8 @@ class PantryType extends AbstractType
                 break;
             case 2:
                 $builder
-                    ->add('latitude', 'hidden')
-                    ->add('longitude', 'hidden')
+                    ->add('latitude', 'text')
+                    ->add('longitude', 'text')
                 ;
                 break;
         }
